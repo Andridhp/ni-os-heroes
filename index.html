@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#6366F1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Niños Héroes">
+<title>Niños Héroes APP - 1° de Secundaria</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px; line-height: 1.5;
+  color: #0F172A;
+  background: #F8FAFC;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+  user-select: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.topbar {
+  position: sticky; top: 0;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E2E8F0;
+  padding: 12px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  z-index: 10;
+  flex-shrink: 0;
+}
+.topbar .left { display: flex; align-items: center; gap: 10px; }
+.btn-back {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: none; background: #F1F5F9;
+  font-size: 18px; cursor: pointer; color: #0F172A;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.btn-back:active { background: #E2E8F0; transform: scale(0.95); }
+.topbar-title { font-weight: 700; font-size: 16px; }
+.topbar-subtitle { font-size: 12px; color: #475569; }
+.stats-pill {
+  display: flex; align-items: center; gap: 6px;
+  background: #E0E7FF;
+  color: #4F46E5;
+  padding: 6px 12px; border-radius: 999px;
+  font-weight: 700; font-size: 13px;
+}
+.stats-pill.lvl { background: #FEF3C7; color: #92400E; }
+.container {
+  max-width: 800px; margin: 0 auto;
+  padding: 20px 16px;
+  width: 100%; flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.welcome {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 24px; text-align: center;
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+  color: white;
+}
+.welcome-hero {
+  font-size: 80px; margin-bottom: 16px;
+  animation: bounce 1.2s ease-in-out infinite alternate;
+}
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-8px); }
+}
+.welcome h1 {
+  font-size: 32px; font-weight: 800;
+  letter-spacing: -0.5px; margin-bottom: 8px;
+}
+.welcome .tagline {
+  font-size: 15px; opacity: 0.9; margin-bottom: 32px; max-width: 380px;
+}
+.welcome-form {
+  width: 100%; max-width: 340px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.welcome-form input {
+  padding: 16px 20px; font-size: 16px;
+  border: none; border-radius: 16px;
+  background: white; color: #0F172A;
+  font-weight: 500; outline: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  -webkit-appearance: none;
+}
+.welcome-form button {
+  padding: 16px 20px; font-size: 16px; font-weight: 700;
+  border: none; border-radius: 16px;
+  background: #FBBF24; color: #78350F;
+  cursor: pointer; box-shadow: 0 3px 0 #D97706;
+  transition: all 0.1s;
+  -webkit-appearance: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.welcome-form button:active { transform: translateY(2px); box-shadow: 0 1px 0 #D97706; }
+.greeting {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(15,23,42,0.06);
+  display: flex; align-items: center; gap: 14px;
+}
+.avatar {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+  color: white; font-size: 24px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.greeting-text h2 { font-size: 18px; margin-bottom: 2px; }
+.greeting-text p { color: #475569; font-size: 14px; }
+.xp-bar {
+  margin-top: 10px;
+  height: 8px; background: #F1F5F9;
+  border-radius: 999px; overflow: hidden;
+}
+.xp-bar-fill {
+  height: 100%; background: linear-gradient(90deg, #F59E0B, #FB923C);
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+.greeting-meta {
+  display: flex; justify-content: space-between;
+  font-size: 12px; color: #94A3B8;
+  margin-top: 4px; font-weight: 600;
+}
+.section-title {
+  font-size: 13px; font-weight: 700;
+  color: #94A3B8; text-transform: uppercase;
+  letter-spacing: 1px; margin: 24px 4px 12px;
+}
+.subjects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+.subject-card {
+  background: white;
+  border-radius: 16px;
+  padding: 18px; cursor: pointer;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 8px rgba(15,23,42,0.06);
+  transition: all 0.2s;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.subject-card:active { transform: scale(0.98); }
+.subject-icon {
+  width: 52px; height: 52px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; margin-bottom: 12px;
+  color: white;
+}
+.subject-card h3 { font-size: 17px; margin-bottom: 3px; }
+.subject-card p { font-size: 13px; color: #475569; margin-bottom: 12px; }
+.subject-progress {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: #94A3B8; font-weight: 600;
+}
+.subject-progress-bar {
+  flex: 1; height: 6px; background: #F1F5F9;
+  border-radius: 999px; overflow: hidden;
+}
+.subject-progress-fill {
+  height: 100%; border-radius: 999px;
+  transition: width 0.5s ease;
+}
+.achievements-card {
+  background: linear-gradient(135deg, #FBBF24, #F59E0B);
+  border-radius: 16px;
+  padding: 18px; color: #78350F;
+  display: flex; align-items: center; gap: 14px;
+  cursor: pointer; box-shadow: 0 2px 8px rgba(15,23,42,0.06);
+  transition: transform 0.15s;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.achievements-card:active { transform: scale(0.98); }
+.achievements-icon { font-size: 36px; }
+.achievements-text h3 { font-size: 16px; font-weight: 800; }
+.achievements-text p { font-size: 13px; opacity: 0.85; }
+.subject-header {
+  border-radius: 16px;
+  padding: 22px; color: white;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(15,23,42,0.06);
+}
+.subject-header .badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.25);
+  padding: 4px 10px; border-radius: 999px;
+  font-size: 12px; font-weight: 700;
+  margin-bottom: 8px;
+}
+.subject-header h1 {
+  font-size: 26px; font-weight: 800; margin-bottom: 4px;
+  display: flex; align-items: center; gap: 10px;
+}
+.subject-header p { opacity: 0.9; }
+.topics-list { display: flex; flex-direction: column; gap: 12px; }
+.topic-card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px; display: flex; align-items: center;
+  gap: 14px; cursor: pointer;
+  border: 2px solid #E2E8F0;
+  transition: all 0.15s;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.topic-card:active:not(.locked) { transform: scale(0.98); border-color: #6366F1; }
+.topic-card.locked { opacity: 0.55; cursor: not-allowed; }
+.topic-number {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: #F1F5F9;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 16px;
+  color: #475569; flex-shrink: 0;
+}
+.topic-card.completed .topic-number {
+  background: #22C55E; color: white;
+}
+.topic-card.in-progress .topic-number {
+  background: #F59E0B; color: white;
+}
+.topic-info { flex: 1; min-width: 0; }
+.topic-info h3 { font-size: 15px; margin-bottom: 2px; }
+.topic-info p { font-size: 12px; color: #94A3B8; }
+.topic-score {
+  font-size: 13px; font-weight: 700;
+  color: #16A34A;
+}
+.topic-score.none { color: #94A3B8; }
+.topic-arrow { color: #94A3B8; font-size: 18px; }
+.quiz-progress {
+  background: white; padding: 14px 16px;
+  border-bottom: 1px solid #E2E8F0;
+  flex-shrink: 0;
+}
+.quiz-progress-info {
+  display: flex; justify-content: space-between;
+  font-size: 13px; color: #475569;
+  font-weight: 600; margin-bottom: 8px;
+}
+.quiz-progress-bar {
+  height: 8px; background: #F1F5F9;
+  border-radius: 999px; overflow: hidden;
+}
+.quiz-progress-fill {
+  height: 100%; border-radius: 999px;
+  transition: width 0.4s ease;
+}
+.quiz-body {
+  max-width: 700px; margin: 0 auto;
+  padding: 24px 16px;
+}
+.quiz-question {
+  background: white;
+  border-radius: 16px;
+  padding: 24px 20px;
+  box-shadow: 0 2px 8px rgba(15,23,42,0.06);
+  margin-bottom: 16px;
+  font-size: 18px; font-weight: 600;
+  line-height: 1.45;
+}
+.quiz-options { display: flex; flex-direction: column; gap: 10px; }
+.option-btn {
+  background: white;
+  border: 2px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 16px 18px;
+  text-align: left; font-size: 15px; font-weight: 500;
+  color: #0F172A; cursor: pointer;
+  transition: all 0.15s;
+  display: flex; align-items: center; gap: 12px;
+  font-family: inherit;
+  -webkit-appearance: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.option-btn:active:not(:disabled) {
+  border-color: #6366F1;
+  background: #E0E7FF;
+  transform: scale(0.98);
+}
+.option-letter {
+  width: 30px; height: 30px; border-radius: 8px;
+  background: #F1F5F9;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 14px;
+  color: #475569; flex-shrink: 0;
+  transition: all 0.15s;
+}
+.option-btn:active:not(:disabled) .option-letter {
+  background: #6366F1; color: white;
+}
+.option-btn.correct {
+  border-color: #22C55E; background: #DCFCE7;
+  animation: pulse 0.4s ease;
+}
+.option-btn.correct .option-letter {
+  background: #22C55E; color: white;
+}
+.option-btn.wrong {
+  border-color: #EF4444; background: #FEE2E2;
+  animation: shake 0.4s ease;
+}
+.option-btn.wrong .option-letter {
+  background: #EF4444; color: white;
+}
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+.quiz-feedback {
+  margin-top: 18px; padding: 16px 18px;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; animation: slideUp 0.3s ease;
+}
+@keyframes slideUp {
+  from { transform: translateY(16px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.quiz-feedback.correct {
+  background: #DCFCE7; color: #16A34A;
+}
+.quiz-feedback.wrong {
+  background: #FEE2E2; color: #DC2626;
+}
+.quiz-feedback-text { font-weight: 700; flex: 1; }
+.quiz-feedback-text small {
+  display: block; font-weight: 500; font-size: 12px;
+  margin-top: 2px; opacity: 0.85;
+}
+.btn-continue {
+  border: none; padding: 12px 20px; border-radius: 16px;
+  font-size: 15px; font-weight: 700;
+  cursor: pointer; background: #22C55E; color: white;
+  box-shadow: 0 3px 0 #16A34A;
+  transition: all 0.1s;
+  -webkit-appearance: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.btn-continue:active { transform: translateY(2px); box-shadow: 0 1px 0 #16A34A; }
+.btn-continue.error { background: #EF4444; box-shadow: 0 3px 0 #DC2626; }
+.btn-continue.error:active { box-shadow: 0 1px 0 #DC2626; }
+.results {
+  padding: 32px 16px; text-align: center;
+  max-width: 500px; margin: 0 auto;
+}
+.results-emoji { font-size: 80px; margin-bottom: 16px; animation: bounce 1s infinite alternate; }
+.results h1 { font-size: 26px; margin-bottom: 8px; }
+.results p.subtitle { color: #475569; margin-bottom: 24px; }
+.results-score {
+  background: white;
+  border-radius: 16px;
+  padding: 24px; margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(15,23,42,0.06);
+}
+.results-score-big {
+  font-size: 56px; font-weight: 800;
+  color: #6366F1;
+  line-height: 1;
+}
+.results-score-total { font-size: 24px; color: #94A3B8; font-weight: 600; }
+.results-score-label { color: #475569; margin-top: 8px; font-weight: 600; }
+.level-up-banner {
+  background: linear-gradient(135deg, #FBBF24, #F59E0B);
+  color: #78350F;
+  border-radius: 16px;
+  padding: 20px; margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-size: 18px; font-weight: 800;
+  animation: levelUpAnim 0.6s ease;
+}
+@keyframes levelUpAnim {
+  0% { transform: scale(0.9); opacity: 0; }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.level-up-quote {
+  background: white;
+  border-radius: 16px;
+  padding: 18px; margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(15,23,42,0.06);
+  font-size: 15px; font-style: italic;
+  color: #6366F1;
+  text-align: center; line-height: 1.6;
+}
+.results-rewards {
+  background: linear-gradient(135deg, #FBBF24, #F59E0B);
+  color: #78350F;
+  border-radius: 16px;
+  padding: 20px; margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-size: 17px; font-weight: 800;
+}
+.new-achievements {
+  background: white;
+  border-radius: 16px;
+  padding: 18px; margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(15,23,42,0.06);
+}
+.new-achievements h3 {
+  font-size: 13px; color: #94A3B8;
+  text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+.new-achievement-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px; background: #FEF3C7;
+  border-radius: 16px; margin-bottom: 8px;
+}
+.new-achievement-emoji { font-size: 28px; }
+.new-achievement-info h4 { font-size: 14px; }
+.new-achievement-info p { font-size: 12px; color: #475569; }
+.results-buttons {
+  display: flex; gap: 10px; flex-direction: column;
+}
+.btn-primary {
+  padding: 16px; font-size: 15px; font-weight: 700;
+  border: none; border-radius: 16px;
+  background: #6366F1; color: white;
+  cursor: pointer; box-shadow: 0 3px 0 #4F46E5;
+  transition: all 0.1s;
+  -webkit-appearance: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.btn-primary:active { transform: translateY(2px); box-shadow: 0 1px 0 #4F46E5; }
+.btn-secondary {
+  padding: 16px; font-size: 15px; font-weight: 700;
+  border: 2px solid #E2E8F0; border-radius: 16px;
+  background: white; color: #0F172A;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.btn-secondary:active { background: #F1F5F9; }
+.modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(15,23,42,0.5);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px; z-index: 100;
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.modal {
+  background: white;
+  border-radius: 16px;
+  max-width: 480px; width: 100%;
+  max-height: 80vh; overflow-y: auto;
+  padding: 22px;
+  animation: popIn 0.25s ease;
+  -webkit-overflow-scrolling: touch;
+}
+@keyframes popIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.modal-header { display: flex; justify-content: space-between; margin-bottom: 16px; align-items: center; }
+.modal-header h2 { font-size: 20px; }
+.btn-close {
+  background: #F1F5F9; border: none;
+  width: 32px; height: 32px; border-radius: 50%;
+  font-size: 16px; cursor: pointer; color: #475569;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.btn-close:active { background: #E2E8F0; }
+.achievement-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px; border-radius: 16px;
+  margin-bottom: 8px; background: #F1F5F9;
+}
+.achievement-item.locked { opacity: 0.4; }
+.achievement-emoji { font-size: 30px; }
+.achievement-info h3 { font-size: 14px; margin-bottom: 2px; }
+.achievement-info p { font-size: 12px; color: #475569; }
+.confetti {
+  position: fixed; inset: 0; pointer-events: none;
+  z-index: 200; overflow: hidden;
+}
+.confetti-piece {
+  position: absolute; width: 10px; height: 10px;
+  animation: confetti-fall 2s ease-in forwards;
+}
+@keyframes confetti-fall {
+  0% { transform: translateY(-20px) rotate(0); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+.footer {
+  text-align: center; padding: 20px;
+  color: #94A3B8; font-size: 12px;
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+'use strict';
+
+const DATA = {"appNombre": "Niños Héroes APP", "grado": "1° de Secundaria", "materias": [{"id": "matematicas", "nombre": "Matemáticas", "icono": "🔢", "color": "#4F46E5", "descripcion": "Números, operaciones, geometría y más", "temas": [{"id": "mat_01", "nombre": "Números naturales", "descripcion": "Lectura, escritura y operaciones básicas", "preguntas": [{"pregunta": "¿Cómo se escribe con número cinco mil doscientos treinta y cuatro?", "opciones": ["5 234", "5 324", "5 243", "5 432"], "correcta": 0}, {"pregunta": "¿Cuál es el valor posicional del 7 en 47 903?", "opciones": ["Unidades", "Decenas", "Centenas", "Millares"], "correcta": 3}, {"pregunta": "¿Cuánto es 138 + 245?", "opciones": ["373", "383", "393", "483"], "correcta": 1}, {"pregunta": "¿Cuánto es 600 − 247?", "opciones": ["343", "363", "453", "353"], "correcta": 3}, {"pregunta": "¿Cuánto es 24 × 15?", "opciones": ["340", "360", "380", "300"], "correcta": 1}, {"pregunta": "¿Cuánto es 144 ÷ 12?", "opciones": ["11", "12", "13", "14"], "correcta": 1}, {"pregunta": "En 18 465, ¿cuántas decenas de millar hay?", "opciones": ["1", "8", "4", "18"], "correcta": 0}, {"pregunta": "¿Cuál es el resultado de 250 + 75 − 80?", "opciones": ["235", "255", "245", "265"], "correcta": 2}, {"pregunta": "Siguiendo el orden de operaciones, ¿cuánto es 6 + 4 × 3?", "opciones": ["30", "18", "22", "15"], "correcta": 1}, {"pregunta": "Un camión carga 375 cajas y descarga 128. ¿Cuántas le quedan?", "opciones": ["257", "247", "237", "267"], "correcta": 1}]}, {"id": "mat_02", "nombre": "Múltiplos y divisores", "descripcion": "Pares, impares, MCD y mcm", "preguntas": [{"pregunta": "¿Cuál de estos números es par?", "opciones": ["17", "23", "42", "51"], "correcta": 2}, {"pregunta": "¿Cuál número es múltiplo de 5?", "opciones": ["22", "34", "47", "60"], "correcta": 3}, {"pregunta": "¿Cuál número es divisible entre 3?", "opciones": ["27", "25", "29", "31"], "correcta": 0}, {"pregunta": "¿Cuál es un número primo?", "opciones": ["15", "21", "11", "27"], "correcta": 2}, {"pregunta": "¿Cuál es el MCD de 12 y 18?", "opciones": ["3", "4", "6", "9"], "correcta": 2}, {"pregunta": "¿Cuál es el mcm de 4 y 6?", "opciones": ["10", "12", "18", "24"], "correcta": 1}, {"pregunta": "¿Cuántos divisores tiene el número 10?", "opciones": ["2", "3", "4", "5"], "correcta": 2}, {"pregunta": "¿Cuál NO es múltiplo de 7?", "opciones": ["14", "21", "35", "40"], "correcta": 3}, {"pregunta": "Descompón 36 en factores primos:", "opciones": ["2² × 3²", "2 × 3³", "2³ × 3", "6²"], "correcta": 0}, {"pregunta": "¿Cuál es el mcm de 8 y 12?", "opciones": ["16", "20", "24", "48"], "correcta": 2}]}, {"id": "mat_03", "nombre": "Fracciones", "descripcion": "Representación, comparación y operaciones", "preguntas": [{"pregunta": "¿Qué fracción representa la mitad?", "opciones": ["1/3", "2/3", "1/2", "2/4 menos"], "correcta": 2}, {"pregunta": "¿Cuál fracción es mayor?", "opciones": ["1/4", "3/8", "1/2", "2/5"], "correcta": 2}, {"pregunta": "¿Cuánto es 1/3 + 1/3?", "opciones": ["1/6", "2/6", "2/3", "1/9"], "correcta": 2}, {"pregunta": "¿Cuál es la fracción simplificada de 6/8?", "opciones": ["2/3", "3/4", "4/5", "1/2"], "correcta": 1}, {"pregunta": "¿Cuánto es 1/2 + 1/4?", "opciones": ["2/6", "3/4", "1/6", "2/4"], "correcta": 1}, {"pregunta": "¿Cuál fracción equivale a 1/2?", "opciones": ["2/5", "3/7", "4/8", "5/11"], "correcta": 2}, {"pregunta": "¿Cuánto es 2/3 − 1/3?", "opciones": ["1/3", "3/6", "0", "1/6"], "correcta": 0}, {"pregunta": "¿Cuál es una fracción impropia?", "opciones": ["3/4", "7/5", "2/9", "1/6"], "correcta": 1}, {"pregunta": "¿Cuánto es 3/4 de 20?", "opciones": ["10", "12", "15", "18"], "correcta": 2}, {"pregunta": "¿Cuánto es 2/5 × 1/2?", "opciones": ["3/7", "1/5", "2/10 menos", "2/7"], "correcta": 1}]}, {"id": "mat_04", "nombre": "Números decimales", "descripcion": "Lectura, comparación y operaciones", "preguntas": [{"pregunta": "¿Cómo se lee el número 0.5?", "opciones": ["Cinco", "Cinco décimos", "Medio entero", "Cinco centenas"], "correcta": 1}, {"pregunta": "¿Cuál decimal es mayor?", "opciones": ["0.7", "0.65", "0.07", "0.57"], "correcta": 0}, {"pregunta": "¿Cuánto es 0.5 + 0.25?", "opciones": ["0.30", "0.75", "0.725", "0.7"], "correcta": 1}, {"pregunta": "¿Cuánto es 1.2 − 0.45?", "opciones": ["0.85", "0.75", "0.65", "0.95"], "correcta": 1}, {"pregunta": "¿Qué decimal equivale a 1/4?", "opciones": ["0.14", "0.25", "0.40", "0.50"], "correcta": 1}, {"pregunta": "¿Qué fracción equivale a 0.8?", "opciones": ["8/100", "1/8", "4/5", "8/9"], "correcta": 2}, {"pregunta": "¿Cuánto es 0.3 × 0.2?", "opciones": ["0.6", "0.06", "0.006", "0.23"], "correcta": 1}, {"pregunta": "¿Cuánto es 2.5 × 4?", "opciones": ["6.0", "10.0", "12.5", "8.5"], "correcta": 1}, {"pregunta": "¿Cuál es el valor posicional del 4 en 7.043?", "opciones": ["Décimas", "Centésimas", "Milésimas", "Unidades"], "correcta": 1}, {"pregunta": "Ordena de menor a mayor: 0.5, 0.05, 0.55, 0.505", "opciones": ["0.05, 0.5, 0.505, 0.55", "0.5, 0.55, 0.505, 0.05", "0.05, 0.505, 0.5, 0.55", "0.5, 0.05, 0.55, 0.505"], "correcta": 0}]}, {"id": "mat_05", "nombre": "Números con signo", "descripcion": "Enteros positivos y negativos", "preguntas": [{"pregunta": "¿Cuál número es mayor: −5 o −2?", "opciones": ["−5", "−2", "Son iguales", "No se pueden comparar"], "correcta": 1}, {"pregunta": "¿Cuánto es (−3) + (−4)?", "opciones": ["−7", "7", "−1", "1"], "correcta": 0}, {"pregunta": "¿Cuánto es (−5) + 8?", "opciones": ["−13", "−3", "3", "13"], "correcta": 2}, {"pregunta": "¿Cuánto es 6 − (−2)?", "opciones": ["4", "−4", "8", "−8"], "correcta": 2}, {"pregunta": "¿Cuánto es (−3) × (−2)?", "opciones": ["−6", "6", "−5", "5"], "correcta": 1}, {"pregunta": "¿Cuánto es (−8) ÷ 2?", "opciones": ["4", "−4", "−6", "6"], "correcta": 1}, {"pregunta": "El valor absoluto de −9 es:", "opciones": ["−9", "0", "9", "−1"], "correcta": 2}, {"pregunta": "Si la temperatura baja de 5°C a −3°C, ¿cuántos grados bajó?", "opciones": ["2°", "8°", "−8°", "5°"], "correcta": 1}, {"pregunta": "¿Cuánto es (−4) + 4?", "opciones": ["−8", "8", "0", "−4"], "correcta": 2}, {"pregunta": "¿Cuánto es 10 − 15 + 3?", "opciones": ["−2", "2", "−8", "8"], "correcta": 0}]}, {"id": "mat_06", "nombre": "Proporcionalidad", "descripcion": "Razones, regla de tres, porcentajes y escalas", "preguntas": [{"pregunta": "Si 3 kg de manzanas cuestan $45, ¿cuánto cuestan 7 kg?", "opciones": ["$95", "$105", "$115", "$135"], "correcta": 1}, {"pregunta": "Un vehículo recorre 180 km con 15 L de gasolina. ¿Cuántos km recorre con 25 L?", "opciones": ["240 km", "260 km", "280 km", "300 km"], "correcta": 3}, {"pregunta": "En un mapa la escala es 1:50 000. Si dos lugares están a 4 cm, ¿a cuántos km están en la realidad?", "opciones": ["0.2 km", "2 km", "20 km", "200 km"], "correcta": 1}, {"pregunta": "Si una camisa cuesta $600 y le aplican 20% de descuento y luego 16% de IVA, ¿cuánto se paga?", "opciones": ["$556.80", "$576.00", "$600.00", "$662.40"], "correcta": 0}, {"pregunta": "5 obreros tardan 12 días en terminar una obra. ¿Cuántos días tardarán 8 obreros (proporcionalidad inversa)?", "opciones": ["6.5 días", "7 días", "7.5 días", "9 días"], "correcta": 2}, {"pregunta": "Se reparten $1,800 entre tres hermanos en razón 2:3:4. ¿Cuánto recibe el que más toca?", "opciones": ["$400", "$600", "$800", "$900"], "correcta": 2}, {"pregunta": "Si x/12 = 15/20, ¿cuánto vale x?", "opciones": ["7", "8", "9", "10"], "correcta": 2}, {"pregunta": "Una mezcla lleva 3 partes de arena por 2 de cemento. Si hay 40 kg de cemento, ¿cuánto de arena?", "opciones": ["45 kg", "50 kg", "60 kg", "80 kg"], "correcta": 2}, {"pregunta": "Un producto sube 10% y luego baja 10%. Respecto del precio original:", "opciones": ["Queda igual", "Sube 1%", "Baja 1%", "Baja 10%"], "correcta": 2}, {"pregunta": "Un banco ofrece 6% anual. Si depositas $2,500, ¿cuánto tendrás al final del año (interés simple)?", "opciones": ["$2,530", "$2,560", "$2,625", "$2,650"], "correcta": 3}]}, {"id": "mat_07", "nombre": "Ecuaciones lineales", "descripcion": "Resolver ecuaciones y problemas aplicados", "preguntas": [{"pregunta": "En 3x − 5 = 2x + 7, ¿cuánto vale x?", "opciones": ["2", "6", "10", "12"], "correcta": 3}, {"pregunta": "En 2(x + 4) = 3x − 1, ¿cuánto vale x?", "opciones": ["5", "7", "9", "11"], "correcta": 2}, {"pregunta": "En x/3 + 2 = 5, ¿cuánto vale x?", "opciones": ["6", "7", "8", "9"], "correcta": 3}, {"pregunta": "En (x + 3)/2 = 7, ¿cuánto vale x?", "opciones": ["9", "10", "11", "12"], "correcta": 2}, {"pregunta": "Al despejar x en 3x + 4 = 19, x es igual a:", "opciones": ["(19-4)/3", "19-4·3", "(19+4)/3", "19/(3-4)"], "correcta": 0}, {"pregunta": "En 4(2x − 3) = 3(x + 1), ¿cuánto vale x?", "opciones": ["2", "3", "4", "5"], "correcta": 1}, {"pregunta": "Un número aumentado en su triple es 48. ¿Cuál es el número?", "opciones": ["10", "12", "14", "16"], "correcta": 1}, {"pregunta": "La edad de Luis es el doble que la de su hermano. Si la suma es 27, ¿qué edad tiene Luis?", "opciones": ["9", "15", "18", "20"], "correcta": 2}, {"pregunta": "El perímetro de un rectángulo es 40. Si el largo es 3 más que el ancho, el ancho es:", "opciones": ["6.5", "8.5", "10", "12"], "correcta": 1}, {"pregunta": "Si 3x − 2 = x + 10 y 2y = x + 4, ¿cuánto vale y?", "opciones": ["5", "6", "7", "8"], "correcta": 0}]}, {"id": "mat_08", "nombre": "Geometría y ángulos", "descripcion": "Polígonos, paralelas y Pitágoras", "preguntas": [{"pregunta": "La suma de los ángulos internos de un pentágono es:", "opciones": ["360°", "450°", "540°", "720°"], "correcta": 2}, {"pregunta": "En un polígono regular de n lados, cada ángulo interior mide (n−2)·180°/n. Para un hexágono regular es:", "opciones": ["90°", "108°", "120°", "135°"], "correcta": 2}, {"pregunta": "Dos rectas paralelas cortadas por una transversal forman ángulos alternos internos que son:", "opciones": ["Complementarios", "Iguales", "Suplementarios", "Agudos siempre"], "correcta": 1}, {"pregunta": "Si dos ángulos son opuestos por el vértice, entonces:", "opciones": ["Suman 90°", "Son iguales", "Suman 180°", "Son distintos"], "correcta": 1}, {"pregunta": "En un triángulo rectángulo con catetos 6 y 8, la hipotenusa mide:", "opciones": ["10", "12", "14", "48"], "correcta": 0}, {"pregunta": "Un triángulo tiene ángulos de 40° y 75°. El tercer ángulo mide:", "opciones": ["55°", "65°", "70°", "115°"], "correcta": 1}, {"pregunta": "Dos triángulos son semejantes cuando:", "opciones": ["Tienen igual área", "Tienen igual perímetro", "Tienen ángulos iguales y lados proporcionales", "Tienen un lado igual"], "correcta": 2}, {"pregunta": "Un triángulo con lados 5, 12 y 13 es:", "opciones": ["Equilátero", "Isósceles", "Rectángulo", "Obtusángulo"], "correcta": 2}, {"pregunta": "La suma de los ángulos exteriores de cualquier polígono convexo es:", "opciones": ["180°", "360°", "(n−2)·180°", "n·90°"], "correcta": 1}, {"pregunta": "Si un ángulo mide (3x+15)° y su suplementario mide (5x−7)°, ¿cuánto vale x?", "opciones": ["19", "21.5", "23", "27.5"], "correcta": 1}]}, {"id": "mat_09", "nombre": "Áreas, Pitágoras y probabilidad", "descripcion": "Figuras compuestas, círculo y estadística", "preguntas": [{"pregunta": "El área de un círculo de radio 5 cm es aproximadamente (π ≈ 3.14):", "opciones": ["15.7 cm²", "31.4 cm²", "78.5 cm²", "157 cm²"], "correcta": 2}, {"pregunta": "La circunferencia de un círculo de diámetro 10 cm es aproximadamente:", "opciones": ["15.7 cm", "31.4 cm", "62.8 cm", "100 cm"], "correcta": 1}, {"pregunta": "Un rectángulo de 12×8 cm tiene una diagonal de:", "opciones": ["14.42 cm", "15.62 cm", "20 cm", "4 cm"], "correcta": 0}, {"pregunta": "El área de un trapecio con bases 8 y 12 y altura 5 es:", "opciones": ["40", "50", "60", "100"], "correcta": 1}, {"pregunta": "Un terreno rectangular de 20×15 m tiene adosado un semicírculo de diámetro 15 m. El área total (π≈3.14) es aproximadamente:", "opciones": ["300 m²", "388.3 m²", "476.6 m²", "600 m²"], "correcta": 1}, {"pregunta": "La probabilidad de obtener un número par al lanzar un dado es:", "opciones": ["1/6", "1/3", "1/2", "2/3"], "correcta": 2}, {"pregunta": "Al lanzar dos monedas, la probabilidad de obtener dos águilas es:", "opciones": ["1/2", "1/3", "1/4", "1/8"], "correcta": 2}, {"pregunta": "En los datos 3, 5, 8, 8, 10, 12, la mediana es:", "opciones": ["7", "8", "7.67", "9"], "correcta": 1}, {"pregunta": "La media de 6, 8, x y 14 es 10. ¿Cuánto vale x?", "opciones": ["8", "10", "12", "14"], "correcta": 2}, {"pregunta": "Se extrae al azar una carta de una baraja de 52. La probabilidad de que sea de corazones o de diamantes es:", "opciones": ["1/4", "1/3", "1/2", "2/3"], "correcta": 2}]}]}, {"id": "espanol", "nombre": "Español", "icono": "📚", "color": "#DC2626", "descripcion": "Lectura, escritura y gramática", "temas": [{"id": "esp_01", "nombre": "Tipos de texto", "descripcion": "Narrativo, expositivo y descriptivo", "preguntas": [{"pregunta": "¿Qué tipo de texto cuenta una historia con personajes?", "opciones": ["Expositivo", "Descriptivo", "Narrativo", "Argumentativo"], "correcta": 2}, {"pregunta": "¿Qué tipo de texto explica características de algo?", "opciones": ["Narrativo", "Descriptivo", "Argumentativo", "Instructivo"], "correcta": 1}, {"pregunta": "Un texto expositivo principalmente:", "opciones": ["Cuenta cuentos", "Informa y explica", "Convence al lector", "Da emociones"], "correcta": 1}, {"pregunta": "¿Cuál es un ejemplo de texto narrativo?", "opciones": ["Una receta", "Un cuento", "Una definición", "Un instructivo"], "correcta": 1}, {"pregunta": "¿Cuál es un ejemplo de texto instructivo?", "opciones": ["Una novela", "Un poema", "Una receta de cocina", "Una noticia"], "correcta": 2}, {"pregunta": "¿Qué elemento es esencial en un texto narrativo?", "opciones": ["Tabla de datos", "Personajes y acciones", "Fórmulas", "Listas numeradas"], "correcta": 1}, {"pregunta": "Las partes clásicas de una narración son:", "opciones": ["Inicio, clímax, desenlace", "Principio y final", "Solo desarrollo", "Introducción y conclusión"], "correcta": 0}, {"pregunta": "Un texto argumentativo busca principalmente:", "opciones": ["Contar historias", "Describir lugares", "Convencer al lector", "Dar instrucciones"], "correcta": 2}, {"pregunta": "El propósito de un texto descriptivo es:", "opciones": ["Contar hechos", "Mostrar cómo es algo", "Ordenar pasos", "Argumentar"], "correcta": 1}, {"pregunta": "Una noticia periodística es un texto principalmente:", "opciones": ["Narrativo e informativo", "Argumentativo", "Poético", "Instructivo"], "correcta": 0}]}, {"id": "esp_02", "nombre": "Comprensión lectora", "descripcion": "Identificar ideas y significado", "preguntas": [{"pregunta": "La idea principal de un texto es:", "opciones": ["Un detalle curioso", "El tema central del texto", "El título del libro", "La primera palabra"], "correcta": 1}, {"pregunta": "¿Qué es una idea secundaria?", "opciones": ["La más importante", "Una que apoya la idea principal", "Un dato falso", "El resumen final"], "correcta": 1}, {"pregunta": "Para entender el significado de una palabra nueva, es útil:", "opciones": ["Saltarla", "Mirar el contexto", "Cambiarla por otra cualquiera", "Borrarla"], "correcta": 1}, {"pregunta": "Inferir significa:", "opciones": ["Copiar textualmente", "Deducir algo no dicho directamente", "Leer en voz alta", "Memorizar"], "correcta": 1}, {"pregunta": "Un resumen debe incluir:", "opciones": ["Todos los detalles", "Solo las ideas más importantes", "Opiniones personales", "Datos inventados"], "correcta": 1}, {"pregunta": "Si leo \"el cielo se vistió de gris\", es un lenguaje:", "opciones": ["Literal", "Figurado", "Matemático", "Científico"], "correcta": 1}, {"pregunta": "Identificar personajes, lugar y tiempo ayuda a entender:", "opciones": ["Una fórmula", "Una narración", "Una tabla", "Un mapa"], "correcta": 1}, {"pregunta": "El propósito comunicativo es:", "opciones": ["El tipo de letra", "Por qué se escribió el texto", "El número de páginas", "El nombre del autor"], "correcta": 1}, {"pregunta": "¿Cuál estrategia NO ayuda a la comprensión lectora?", "opciones": ["Subrayar ideas", "Hacer preguntas", "Leer sin pensar", "Hacer resúmenes"], "correcta": 2}, {"pregunta": "Una conclusión en un texto sirve para:", "opciones": ["Presentar el tema", "Cerrar y sintetizar", "Dar ejemplos al inicio", "Dibujar gráficas"], "correcta": 1}]}, {"id": "esp_03", "nombre": "Ortografía básica", "descripcion": "Uso de b/v, s/c/z y mayúsculas", "preguntas": [{"pregunta": "¿Cuál palabra está bien escrita?", "opciones": ["Vaca", "Baca", "Waca", "Vkaa"], "correcta": 0}, {"pregunta": "¿Cuál palabra es correcta?", "opciones": ["Caza (de cazar)", "Casa (de cazar)", "Kasa (de cazar)", "Kaza (de cazar)"], "correcta": 0}, {"pregunta": "¿Cuál palabra usa correctamente la v?", "opciones": ["Estubo", "Estuvo", "Ezstuvo", "Estuwo"], "correcta": 1}, {"pregunta": "¿Cuál palabra lleva mayúscula inicial obligatoria?", "opciones": ["casa", "méxico", "México", "niño"], "correcta": 2}, {"pregunta": "¿Cuál es correcto?", "opciones": ["Iba (del verbo ir)", "Hiba (del verbo ir)", "Yba (del verbo ir)", "Ivha (del verbo ir)"], "correcta": 0}, {"pregunta": "¿Cuál palabra se escribe con c?", "opciones": ["Sielo", "Zielo", "Cielo", "Ksielo"], "correcta": 2}, {"pregunta": "¿Cuál palabra lleva h?", "opciones": ["Oyo (de oír)", "Hoyo (agujero)", "Oio (agujero)", "Ojo (agujero)"], "correcta": 1}, {"pregunta": "¿Cuál palabra está mal escrita?", "opciones": ["Ambre (de hambre)", "Hambre", "Hombre", "Hombro"], "correcta": 0}, {"pregunta": "Se escriben con mayúscula inicial:", "opciones": ["Los días de la semana", "Los nombres propios", "Todos los verbos", "Los adjetivos"], "correcta": 1}, {"pregunta": "¿Cuál palabra está bien escrita?", "opciones": ["Haser", "Hacer", "Azer", "Haser"], "correcta": 1}]}, {"id": "esp_04", "nombre": "Acentuación", "descripcion": "Palabras agudas, graves y esdrújulas", "preguntas": [{"pregunta": "Una palabra aguda se acentúa en la:", "opciones": ["Primera sílaba", "Penúltima sílaba", "Última sílaba", "Antepenúltima sílaba"], "correcta": 2}, {"pregunta": "Una palabra grave se acentúa en la:", "opciones": ["Última sílaba", "Penúltima sílaba", "Antepenúltima sílaba", "Ninguna sílaba"], "correcta": 1}, {"pregunta": "Una palabra esdrújula se acentúa en la:", "opciones": ["Última sílaba", "Penúltima sílaba", "Antepenúltima sílaba", "Primera sílaba"], "correcta": 2}, {"pregunta": "¿Qué tipo de palabra es \"pájaro\"?", "opciones": ["Aguda", "Grave", "Esdrújula", "Sobreesdrújula"], "correcta": 2}, {"pregunta": "¿Qué tipo de palabra es \"canción\"?", "opciones": ["Aguda", "Grave", "Esdrújula", "Monosílaba"], "correcta": 0}, {"pregunta": "¿Qué tipo de palabra es \"libro\"?", "opciones": ["Aguda", "Grave", "Esdrújula", "Sobreesdrújula"], "correcta": 1}, {"pregunta": "Las palabras esdrújulas:", "opciones": ["Nunca llevan acento", "Siempre llevan acento gráfico", "A veces llevan", "Solo si terminan en vocal"], "correcta": 1}, {"pregunta": "¿Cuál palabra es aguda y lleva acento?", "opciones": ["Mesa", "Canción", "Cámara", "Lápiz"], "correcta": 1}, {"pregunta": "Las palabras graves llevan acento cuando NO terminan en:", "opciones": ["Vocal, n o s", "Solo en n", "Consonante distinta de n/s", "Ninguna"], "correcta": 0}, {"pregunta": "¿Cuál palabra es esdrújula?", "opciones": ["Reloj", "Teléfono", "Cantar", "Mesa"], "correcta": 1}]}, {"id": "esp_05", "nombre": "Sustantivos, verbos y adjetivos", "descripcion": "Clases de palabras básicas", "preguntas": [{"pregunta": "¿Qué es un sustantivo?", "opciones": ["Acción", "Nombre de persona, animal o cosa", "Cualidad", "Adverbio"], "correcta": 1}, {"pregunta": "¿Cuál es un sustantivo?", "opciones": ["Correr", "Azul", "Casa", "Rápido"], "correcta": 2}, {"pregunta": "¿Qué es un verbo?", "opciones": ["Palabra que indica acción", "Palabra que nombra cosa", "Una cualidad", "Un número"], "correcta": 0}, {"pregunta": "¿Cuál es un verbo?", "opciones": ["Alto", "Pan", "Saltar", "Feliz"], "correcta": 2}, {"pregunta": "¿Qué es un adjetivo?", "opciones": ["Una acción", "Una palabra que modifica al sustantivo", "Un objeto", "Un pronombre"], "correcta": 1}, {"pregunta": "¿Cuál es un adjetivo?", "opciones": ["Perro", "Comer", "Bonito", "Casa"], "correcta": 2}, {"pregunta": "En \"la niña juega\", la palabra \"niña\" es:", "opciones": ["Verbo", "Sustantivo", "Adjetivo", "Adverbio"], "correcta": 1}, {"pregunta": "En \"corre rápido\", la palabra \"corre\" es:", "opciones": ["Verbo", "Sustantivo", "Adjetivo", "Artículo"], "correcta": 0}, {"pregunta": "En \"el cielo azul\", la palabra \"azul\" es:", "opciones": ["Sustantivo", "Verbo", "Adjetivo", "Adverbio"], "correcta": 2}, {"pregunta": "Los sustantivos propios se refieren a:", "opciones": ["Cualquier cosa", "Nombres únicos (personas, lugares)", "Acciones", "Adjetivos"], "correcta": 1}]}, {"id": "esp_06", "nombre": "Signos de puntuación", "descripcion": "Coma, punto y coma, dos puntos, guión largo", "preguntas": [{"pregunta": "¿En cuál oración la coma es obligatoria?", "opciones": ["Juan y María fueron al cine", "Compré manzanas peras y uvas", "Ellos corrieron rápidamente", "Hoy llueve mucho"], "correcta": 1}, {"pregunta": "La oración \"Mi hermana, que vive en Oaxaca, vendrá mañana\" usa las comas como:", "opciones": ["Enumeración", "Explicativas (incisos)", "Vocativo", "Enlace coordinante"], "correcta": 1}, {"pregunta": "¿Cuál opción usa correctamente el punto y coma?", "opciones": ["Estudié mucho; por eso aprobé.", "Estudié mucho; y aprobé.", "Estudié; mucho, para aprobar.", "Estudié, mucho; aprobé."], "correcta": 0}, {"pregunta": "Los dos puntos se usan correctamente en:", "opciones": ["Compré: manzanas, peras y uvas", "Estimado profesor:", "Fui al: mercado", "Corrió: y ganó"], "correcta": 1}, {"pregunta": "Antes de \"pero\", \"aunque\" y \"sino\" que unen dos oraciones generalmente se escribe:", "opciones": ["Punto", "Coma", "Dos puntos", "Nada"], "correcta": 1}, {"pregunta": "En diálogos, el guión largo (—) se usa para:", "opciones": ["Indicar resta", "Introducir la intervención de un personaje", "Cerrar oraciones", "Separar sílabas"], "correcta": 1}, {"pregunta": "¿Cuál oración usa correctamente el vocativo con coma?", "opciones": ["María ven aquí", "María, ven aquí.", "María. ven aquí", "María; ven aquí"], "correcta": 1}, {"pregunta": "\"Vamos al parque, hace buen día\" — lo correcto sería:", "opciones": ["Igual, está bien", "Vamos al parque; hace buen día.", "Vamos al parque: hace buen día.", "Vamos al parque hace buen día"], "correcta": 1}, {"pregunta": "Los puntos suspensivos (...) se emplean para:", "opciones": ["Terminar siempre una oración formal", "Indicar duda, suspenso o enumeración incompleta", "Separar sílabas", "Enfatizar gritando"], "correcta": 1}, {"pregunta": "¿Cuál oración está puntuada correctamente?", "opciones": ["No obstante, decidí ir a la fiesta.", "No obstante decidí, ir a la fiesta.", "No, obstante decidí ir a la fiesta.", "No obstante: decidí, ir a la fiesta"], "correcta": 0}]}, {"id": "esp_07", "nombre": "Sinónimos, antónimos y matices", "descripcion": "Elegir palabras según el contexto", "preguntas": [{"pregunta": "En \"el niño es muy astuto\", ¿qué sinónimo conserva mejor el significado?", "opciones": ["Tonto", "Listo", "Amable", "Lento"], "correcta": 1}, {"pregunta": "¿Cuál de estas parejas NO es de antónimos?", "opciones": ["Ágil / torpe", "Efímero / duradero", "Veloz / rápido", "Benigno / maligno"], "correcta": 2}, {"pregunta": "\"Su respuesta fue escueta\" — escueta es sinónimo de:", "opciones": ["Breve y concisa", "Larga y detallada", "Falsa", "Grosera"], "correcta": 0}, {"pregunta": "En \"Actuó con cautela\", cautela se acerca más a:", "opciones": ["Valentía", "Prudencia", "Torpeza", "Alegría"], "correcta": 1}, {"pregunta": "Entre \"decir\", \"afirmar\", \"susurrar\" y \"gritar\", la diferencia principal es:", "opciones": ["Ninguna, son iguales", "El matiz de intensidad o actitud", "Solo la ortografía", "El tiempo verbal"], "correcta": 1}, {"pregunta": "\"Un gesto magnánimo\" significa más específicamente:", "opciones": ["Grande y generoso de corazón", "Mezquino", "Tímido", "Rápido"], "correcta": 0}, {"pregunta": "¿Cuál es el antónimo más preciso de \"efímero\"?", "opciones": ["Breve", "Perenne", "Duradero", "Intenso"], "correcta": 2}, {"pregunta": "En \"una noticia verídica\", verídica significa:", "opciones": ["Falsa", "Exagerada", "Verdadera", "Divertida"], "correcta": 2}, {"pregunta": "\"Vasto\" y \"basto\" son:", "opciones": ["Sinónimos", "Homófonos con significado distinto", "Antónimos exactos", "La misma palabra"], "correcta": 1}, {"pregunta": "Identifica el grupo que NO pertenece al mismo campo semántico:", "opciones": ["Pincel, lienzo, óleo, paleta", "Martillo, serrucho, clavo, taladro", "Silla, mesa, libro, café", "Pluma, cuaderno, lápiz, goma"], "correcta": 2}]}, {"id": "esp_08", "nombre": "Poesía y figuras retóricas", "descripcion": "Métrica, rima y recursos literarios", "preguntas": [{"pregunta": "\"Eres fuerte como un roble\" es un ejemplo de:", "opciones": ["Metáfora", "Símil", "Hipérbole", "Anáfora"], "correcta": 1}, {"pregunta": "\"Sus dientes son perlas\" es un ejemplo de:", "opciones": ["Símil", "Metáfora", "Personificación", "Ironía"], "correcta": 1}, {"pregunta": "\"El viento lloraba en la noche\" es un ejemplo de:", "opciones": ["Metáfora", "Hipérbole", "Personificación (prosopopeya)", "Antítesis"], "correcta": 2}, {"pregunta": "\"Te lo he dicho un millón de veces\" es un ejemplo de:", "opciones": ["Hipérbole", "Ironía", "Sinestesia", "Metáfora"], "correcta": 0}, {"pregunta": "Una rima consonante es aquella en la que riman:", "opciones": ["Solo las vocales finales", "Vocales y consonantes desde la última sílaba tónica", "Los versos cercanos", "Cada segunda palabra"], "correcta": 1}, {"pregunta": "\"Amor\" y \"calor\" forman rima:", "opciones": ["Asonante", "Consonante", "No riman", "Libre"], "correcta": 1}, {"pregunta": "\"Casa\" y \"pata\" forman rima:", "opciones": ["Consonante", "Asonante (vocales iguales a-a)", "No riman", "Ripiosa"], "correcta": 1}, {"pregunta": "Un verso de arte menor tiene:", "opciones": ["Hasta 8 sílabas", "Exactamente 11 sílabas", "Más de 14 sílabas", "20 o más sílabas"], "correcta": 0}, {"pregunta": "La anáfora consiste en:", "opciones": ["Comparar dos cosas", "Repetir una o varias palabras al inicio de versos u oraciones", "Exagerar", "Dar cualidades humanas a objetos"], "correcta": 1}, {"pregunta": "\"Oh, la luna, luna, luna...\" es un ejemplo claro de:", "opciones": ["Hipérbole", "Repetición / anáfora para énfasis", "Ironía", "Metáfora exclusivamente"], "correcta": 1}]}, {"id": "esp_09", "nombre": "Vocabulario y semántica avanzada", "descripcion": "Connotación, denotación y prefijos/sufijos", "preguntas": [{"pregunta": "La denotación de una palabra es:", "opciones": ["Su significado afectivo o emocional", "Su significado objetivo y literal", "Su pronunciación", "Su origen griego"], "correcta": 1}, {"pregunta": "La connotación es:", "opciones": ["El significado literal del diccionario", "El valor expresivo o subjetivo asociado a la palabra", "Una falta de ortografía", "Un sinónimo"], "correcta": 1}, {"pregunta": "En \"mi casa es mi hogar\", \"hogar\" se usa con carga:", "opciones": ["Denotativa únicamente", "Connotativa (afectiva)", "Matemática", "Ortográfica"], "correcta": 1}, {"pregunta": "El prefijo \"in-\" en \"invisible\" significa:", "opciones": ["Negación o privación", "Hacia adentro siempre", "Repetición", "Aumento"], "correcta": 0}, {"pregunta": "El prefijo \"re-\" en \"reescribir\" significa:", "opciones": ["Negar", "Volver a hacer / repetir", "Hacia abajo", "Muy mucho"], "correcta": 1}, {"pregunta": "El sufijo \"-mente\" convierte adjetivos en:", "opciones": ["Sustantivos", "Verbos", "Adverbios", "Preposiciones"], "correcta": 2}, {"pregunta": "La palabra \"software\" en español es un ejemplo de:", "opciones": ["Cultismo", "Neologismo / extranjerismo", "Arcaísmo", "Regionalismo"], "correcta": 1}, {"pregunta": "Un arcaísmo es:", "opciones": ["Una palabra de reciente creación", "Una palabra en desuso, de épocas pasadas", "Una palabra extranjera", "Un sinónimo"], "correcta": 1}, {"pregunta": "La palabra \"banco\" puede significar asiento, institución financiera o grupo de peces. Esto es:", "opciones": ["Sinonimia", "Polisemia", "Antonimia", "Homografía distinta"], "correcta": 1}, {"pregunta": "\"Vaca\" (animal) y \"baca\" (portaequipaje) son:", "opciones": ["Homógrafas", "Homófonas (suenan igual, se escriben y significan distinto)", "Sinónimos", "Polisémicas"], "correcta": 1}]}]}, {"id": "ingles", "nombre": "Inglés", "icono": "🌎", "color": "#0891B2", "descripcion": "English A1 para principiantes", "temas": [{"id": "ing_01", "nombre": "Saludos y presentaciones", "descripcion": "Greetings and introductions", "preguntas": [{"pregunta": "¿Cómo se dice \"Hola\" en inglés?", "opciones": ["Goodbye", "Hello", "Please", "Thanks"], "correcta": 1}, {"pregunta": "¿Cómo se dice \"Adiós\" en inglés?", "opciones": ["Hello", "Good morning", "Goodbye", "Yes"], "correcta": 2}, {"pregunta": "\"Good morning\" significa:", "opciones": ["Buenas noches", "Buenos días", "Buenas tardes", "Hasta luego"], "correcta": 1}, {"pregunta": "\"Good night\" significa:", "opciones": ["Buenos días", "Buenas tardes", "Buenas noches", "Hola"], "correcta": 2}, {"pregunta": "Para preguntar el nombre se dice:", "opciones": ["How are you?", "What's your name?", "Where are you?", "How old?"], "correcta": 1}, {"pregunta": "Para responder \"Me llamo Ana\" se dice:", "opciones": ["My name is Ana", "I am fine", "You are Ana", "He is Ana"], "correcta": 0}, {"pregunta": "\"How are you?\" significa:", "opciones": ["¿Qué haces?", "¿Cómo estás?", "¿Dónde vives?", "¿Cuántos años tienes?"], "correcta": 1}, {"pregunta": "Para decir \"Estoy bien\" se usa:", "opciones": ["I am fine", "I am sad", "I am tired", "I am busy"], "correcta": 0}, {"pregunta": "\"Nice to meet you\" significa:", "opciones": ["Adiós", "Mucho gusto", "¿Cómo te va?", "Buenos días"], "correcta": 1}, {"pregunta": "\"Please\" y \"Thank you\" significan:", "opciones": ["Hola / Adiós", "Por favor / Gracias", "Sí / No", "Bueno / Malo"], "correcta": 1}]}, {"id": "ing_02", "nombre": "Pronombres personales", "descripcion": "I, you, he, she, it, we, they", "preguntas": [{"pregunta": "\"I\" significa:", "opciones": ["Tú", "Yo", "Él", "Nosotros"], "correcta": 1}, {"pregunta": "\"You\" significa:", "opciones": ["Yo", "Tú", "Ella", "Ellos"], "correcta": 1}, {"pregunta": "\"He\" se usa para:", "opciones": ["Una mujer", "Un hombre", "Un objeto", "Un grupo"], "correcta": 1}, {"pregunta": "\"She\" se usa para:", "opciones": ["Un hombre", "Una mujer", "Un animal cualquiera", "Un lugar"], "correcta": 1}, {"pregunta": "\"It\" se usa para:", "opciones": ["Personas", "Cosas o animales", "Lugares famosos", "Países"], "correcta": 1}, {"pregunta": "\"We\" significa:", "opciones": ["Yo", "Ellos", "Nosotros", "Ustedes"], "correcta": 2}, {"pregunta": "\"They\" significa:", "opciones": ["Ella", "Nosotros", "Ustedes", "Ellos/Ellas"], "correcta": 3}, {"pregunta": "Para hablar de mi amiga Ana, uso:", "opciones": ["He", "She", "It", "They"], "correcta": 1}, {"pregunta": "Para hablar de un perro (sin nombre), uso:", "opciones": ["He", "She", "It", "We"], "correcta": 2}, {"pregunta": "Para hablar de mi mamá y yo, uso:", "opciones": ["They", "You", "We", "She"], "correcta": 2}]}, {"id": "ing_03", "nombre": "Verbo to be", "descripcion": "Am, is, are", "preguntas": [{"pregunta": "Con \"I\" se usa la forma:", "opciones": ["is", "are", "am", "be"], "correcta": 2}, {"pregunta": "Con \"he\", \"she\" o \"it\" se usa:", "opciones": ["am", "is", "are", "be"], "correcta": 1}, {"pregunta": "Con \"you\", \"we\", \"they\" se usa:", "opciones": ["am", "is", "are", "be"], "correcta": 2}, {"pregunta": "Completa: \"I ___ a student.\"", "opciones": ["is", "are", "am", "be"], "correcta": 2}, {"pregunta": "Completa: \"She ___ my sister.\"", "opciones": ["am", "is", "are", "be"], "correcta": 1}, {"pregunta": "Completa: \"They ___ happy.\"", "opciones": ["am", "is", "are", "be"], "correcta": 2}, {"pregunta": "Completa: \"We ___ from Mexico.\"", "opciones": ["is", "am", "are", "be"], "correcta": 2}, {"pregunta": "La forma negativa de \"I am\" es:", "opciones": ["I no am", "I am not", "I not am", "I don't am"], "correcta": 1}, {"pregunta": "La contracción de \"is not\" es:", "opciones": ["isnt", "isn't", "is'nt", "not's"], "correcta": 1}, {"pregunta": "Para preguntar \"¿Eres estudiante?\":", "opciones": ["You are a student?", "Are you a student?", "Is you a student?", "Do you are student?"], "correcta": 1}]}, {"id": "ing_04", "nombre": "Artículos a/an/the", "descripcion": "Uso de artículos", "preguntas": [{"pregunta": "Se usa \"a\" antes de palabras que empiezan con:", "opciones": ["Vocal", "Consonante", "Cualquier letra", "Solo con s"], "correcta": 1}, {"pregunta": "Se usa \"an\" antes de palabras que empiezan con:", "opciones": ["Consonante", "Sonido vocálico", "Cualquier letra", "Letra mayúscula"], "correcta": 1}, {"pregunta": "Completa: \"I have ___ cat.\"", "opciones": ["an", "a", "the", "--"], "correcta": 1}, {"pregunta": "Completa: \"She eats ___ apple.\"", "opciones": ["a", "an", "the", "--"], "correcta": 1}, {"pregunta": "Completa: \"This is ___ elephant.\"", "opciones": ["a", "an", "the", "--"], "correcta": 1}, {"pregunta": "Completa: \"I see ___ book on the table.\"", "opciones": ["an", "the", "a", "--"], "correcta": 2}, {"pregunta": "\"The\" se usa para:", "opciones": ["Algo general", "Algo específico ya conocido", "Nada", "Solo plurales"], "correcta": 1}, {"pregunta": "Completa: \"___ sun is bright.\"", "opciones": ["A", "An", "The", "--"], "correcta": 2}, {"pregunta": "¿Qué artículo es correcto?", "opciones": ["A orange", "An orange", "The an orange", "Orange a"], "correcta": 1}, {"pregunta": "¿Qué artículo es correcto?", "opciones": ["An house", "A house", "House a", "The a house"], "correcta": 1}]}, {"id": "ing_05", "nombre": "Plurales", "descripcion": "Cómo formar plurales en inglés", "preguntas": [{"pregunta": "En general, para formar el plural se añade:", "opciones": ["-s", "-d", "-ing", "-ed"], "correcta": 0}, {"pregunta": "El plural de \"book\" es:", "opciones": ["bookes", "books", "bookies", "book"], "correcta": 1}, {"pregunta": "El plural de \"box\" es:", "opciones": ["boxs", "boxes", "boxies", "box"], "correcta": 1}, {"pregunta": "El plural de \"baby\" es:", "opciones": ["babys", "babies", "babyes", "baby"], "correcta": 1}, {"pregunta": "Las palabras terminadas en \"-sh\", \"-ch\", \"-x\" forman plural con:", "opciones": ["-s", "-es", "-ies", "-ed"], "correcta": 1}, {"pregunta": "El plural de \"child\" es:", "opciones": ["childs", "childes", "children", "childrens"], "correcta": 2}, {"pregunta": "El plural de \"man\" es:", "opciones": ["mans", "men", "manes", "mens"], "correcta": 1}, {"pregunta": "El plural de \"woman\" es:", "opciones": ["womans", "women", "womanes", "womens"], "correcta": 1}, {"pregunta": "El plural de \"foot\" (pie) es:", "opciones": ["foots", "feet", "footes", "feets"], "correcta": 1}, {"pregunta": "El plural de \"city\" es:", "opciones": ["citys", "cities", "cityes", "city"], "correcta": 1}]}, {"id": "ing_06", "nombre": "Presente simple avanzado", "descripcion": "3ra persona, afirmativo, negativo y preguntas", "preguntas": [{"pregunta": "Completa: \"She ___ TV every night.\" (watch)", "opciones": ["watch", "watchs", "watches", "watching"], "correcta": 2}, {"pregunta": "Completa: \"My brother ___ to school by bus.\" (go)", "opciones": ["go", "gos", "goes", "going"], "correcta": 2}, {"pregunta": "Completa: \"Peter ___ his homework after lunch.\" (do)", "opciones": ["do", "dos", "does", "doing"], "correcta": 2}, {"pregunta": "Completa: \"She ___ like coffee.\" (forma negativa)", "opciones": ["don't", "doesn't", "not", "isn't"], "correcta": 1}, {"pregunta": "Completa: \"___ they live in Mexico?\"", "opciones": ["Does", "Do", "Is", "Are"], "correcta": 1}, {"pregunta": "Completa: \"She always ___ up at 6 a.m.\" (get)", "opciones": ["get", "gets", "geting", "got"], "correcta": 1}, {"pregunta": "El adverbio \"always\" normalmente va:", "opciones": ["Al final de la oración", "Entre el sujeto y el verbo principal", "Al inicio siempre", "Después del objeto"], "correcta": 1}, {"pregunta": "¿Cuál oración es correcta?", "opciones": ["He don't speak French.", "He doesn't speaks French.", "He doesn't speak French.", "He not speak French."], "correcta": 2}, {"pregunta": "Respuesta corta a \"Does she play tennis?\" — Sí, ella juega:", "opciones": ["Yes, she do.", "Yes, she does.", "Yes, she is.", "Yes, she plays."], "correcta": 1}, {"pregunta": "\"How often ___ you study English?\"", "opciones": ["does", "are", "do", "is"], "correcta": 2}]}, {"id": "ing_07", "nombre": "Posesivos y genitivo sajón", "descripcion": "Adjetivos, pronombres posesivos y 's", "preguntas": [{"pregunta": "Completa: \"This book is ___.\" (mío — pronombre posesivo)", "opciones": ["my", "mine", "me", "I"], "correcta": 1}, {"pregunta": "Completa: \"That car is ___.\" (de ella — pronombre posesivo)", "opciones": ["her", "hers", "she", "herself"], "correcta": 1}, {"pregunta": "Completa: \"These pens are ___.\" (de nosotros)", "opciones": ["our", "ours", "us", "we"], "correcta": 1}, {"pregunta": "\"This is ___ house.\" (de ellos — adjetivo posesivo)", "opciones": ["their", "theirs", "they", "them"], "correcta": 0}, {"pregunta": "Para decir \"el carro de Juan\" se dice:", "opciones": ["The Juan car", "Juan car", "Juan's car", "Car of Juan's"], "correcta": 2}, {"pregunta": "\"The teachers' room\" significa:", "opciones": ["La sala del maestro", "La sala de los maestros (varios)", "La sala que enseña", "Una sala común"], "correcta": 1}, {"pregunta": "\"Whose bag is this?\" se traduce:", "opciones": ["¿Cómo es esta bolsa?", "¿De quién es esta bolsa?", "¿Qué es esta bolsa?", "¿Cuándo es esta bolsa?"], "correcta": 1}, {"pregunta": "¿Cuál es correcto?", "opciones": ["This is my's book", "This book is my", "This is my book / This book is mine", "This book is me"], "correcta": 2}, {"pregunta": "Completa: \"Her bike is red, ___ is blue.\" (el mío)", "opciones": ["my", "mine", "me", "myself"], "correcta": 1}, {"pregunta": "\"The children's toys\" usa apóstrofe + s porque:", "opciones": ["\"Children\" es plural irregular, se usa 's", "Está mal escrito", "Porque termina en \"n\"", "Es decorativo"], "correcta": 0}]}, {"id": "ing_08", "nombre": "Vocabulario y expresiones", "descripcion": "Escuela, hogar, ropa y falsos cognados", "preguntas": [{"pregunta": "\"Library\" en español significa:", "opciones": ["Librería", "Biblioteca", "Libro", "Libertad"], "correcta": 1}, {"pregunta": "\"Embarrassed\" significa:", "opciones": ["Embarazada", "Avergonzado", "Emborrachado", "Enredado"], "correcta": 1}, {"pregunta": "\"Actually\" significa:", "opciones": ["Actualmente", "De hecho / en realidad", "Activamente", "A cualquier momento"], "correcta": 1}, {"pregunta": "En la escuela, un \"notebook\" es:", "opciones": ["Un libro de notas oficiales", "Un cuaderno", "Una nota musical", "Una computadora"], "correcta": 1}, {"pregunta": "\"Shoes\" significa:", "opciones": ["Chaqueta", "Zapatos", "Camisa", "Calcetines"], "correcta": 1}, {"pregunta": "\"Kitchen\" es:", "opciones": ["Cocina", "Pollo", "Cuarto", "Cocinero"], "correcta": 0}, {"pregunta": "\"Breakfast\" significa:", "opciones": ["Cena", "Comida", "Desayuno", "Descanso"], "correcta": 2}, {"pregunta": "Frecuentemente: \"to make a decision\" significa:", "opciones": ["Hacer una decisión / tomar una decisión", "Fabricar una decisión", "Perder una decisión", "Romper una decisión"], "correcta": 0}, {"pregunta": "\"I'm looking for my keys\" significa:", "opciones": ["Estoy mirando mis llaves", "Estoy buscando mis llaves", "Me parezco a mis llaves", "Guardo mis llaves"], "correcta": 1}, {"pregunta": "\"Weather\" (no confundir con \"whether\") significa:", "opciones": ["Si / acaso", "Clima / tiempo meteorológico", "Semana", "Mojado"], "correcta": 1}]}, {"id": "ing_09", "nombre": "Preguntas y respuestas cortas", "descripcion": "WH-questions y short answers", "preguntas": [{"pregunta": "\"___ do you live?\" — \"In Mexico.\"", "opciones": ["What", "Where", "When", "Who"], "correcta": 1}, {"pregunta": "\"___ is your birthday?\" — \"In June.\"", "opciones": ["What", "Where", "When", "Why"], "correcta": 2}, {"pregunta": "\"___ is she crying?\" — \"Because she is sad.\"", "opciones": ["What", "How", "Where", "Why"], "correcta": 3}, {"pregunta": "\"___ do you go to school?\" — \"By bus.\"", "opciones": ["Why", "When", "How", "Where"], "correcta": 2}, {"pregunta": "\"___ apples are there?\" (cantables)", "opciones": ["How much", "How many", "How often", "How long"], "correcta": 1}, {"pregunta": "\"___ water do you drink?\" (no contable)", "opciones": ["How many", "How much", "How often", "How far"], "correcta": 1}, {"pregunta": "Respuesta corta a \"Are you a student?\" — Sí:", "opciones": ["Yes, I do.", "Yes, I am.", "Yes, I have.", "Yes, I is."], "correcta": 1}, {"pregunta": "Respuesta corta a \"Do you like pizza?\" — No:", "opciones": ["No, I not.", "No, I don't.", "No, I am not.", "No, I doesn't."], "correcta": 1}, {"pregunta": "Respuesta corta a \"Does he play soccer?\" — Sí:", "opciones": ["Yes, he is.", "Yes, he do.", "Yes, he does.", "Yes, he plays."], "correcta": 2}, {"pregunta": "\"You are from Mexico, ___?\" (tag question correcta)", "opciones": ["are you", "do you", "aren't you", "don't you"], "correcta": 2}]}]}, {"id": "biologia", "nombre": "Biología", "icono": "🌱", "color": "#16A34A", "descripcion": "Seres vivos, células y ecosistemas", "temas": [{"id": "bio_01", "nombre": "Características de los seres vivos", "descripcion": "¿Qué hace que algo esté vivo?", "preguntas": [{"pregunta": "¿Cuál es una característica de los seres vivos?", "opciones": ["Se mueven por viento", "Nacen, crecen y se reproducen", "Están hechos de metal", "Nunca cambian"], "correcta": 1}, {"pregunta": "La biología es la ciencia que estudia:", "opciones": ["Las rocas", "Los seres vivos", "Las estrellas", "Los números"], "correcta": 1}, {"pregunta": "¿Cuál NO es un ser vivo?", "opciones": ["Un perro", "Una planta", "Una piedra", "Una bacteria"], "correcta": 2}, {"pregunta": "Los seres vivos necesitan ___ para mantenerse vivos.", "opciones": ["Plástico", "Energía y nutrientes", "Metales pesados", "Nada especial"], "correcta": 1}, {"pregunta": "¿Qué proceso permite a los seres vivos tener descendencia?", "opciones": ["Respiración", "Reproducción", "Digestión", "Excreción"], "correcta": 1}, {"pregunta": "La unidad básica de la vida es:", "opciones": ["La molécula", "El átomo", "La célula", "El órgano"], "correcta": 2}, {"pregunta": "Los seres vivos responden a ___ del medio.", "opciones": ["Los estímulos", "Los colores solamente", "La luz nunca", "Las palabras"], "correcta": 0}, {"pregunta": "La homeostasis es:", "opciones": ["Mantener condiciones internas estables", "Multiplicarse rápido", "Morir jóvenes", "Cambiar de color"], "correcta": 0}, {"pregunta": "¿Qué función vital implica obtener energía de los alimentos?", "opciones": ["Reproducción", "Nutrición", "Irritabilidad", "Crecimiento"], "correcta": 1}, {"pregunta": "Los virus son considerados:", "opciones": ["Claramente vivos", "Claramente no vivos", "Un caso especial, en la frontera de la vida", "Minerales"], "correcta": 2}]}, {"id": "bio_02", "nombre": "La célula", "descripcion": "Unidad básica de la vida", "preguntas": [{"pregunta": "La célula es:", "opciones": ["Un aparato tecnológico", "La unidad básica de los seres vivos", "Un tipo de mineral", "Un planeta pequeño"], "correcta": 1}, {"pregunta": "¿Qué instrumento se usa para ver células?", "opciones": ["Telescopio", "Microscopio", "Lupa solamente", "Radar"], "correcta": 1}, {"pregunta": "Las células con núcleo definido se llaman:", "opciones": ["Procariotas", "Eucariotas", "Sin núcleo", "Virales"], "correcta": 1}, {"pregunta": "Las bacterias son células:", "opciones": ["Eucariotas", "Procariotas", "Animales", "Vegetales"], "correcta": 1}, {"pregunta": "El núcleo de la célula contiene:", "opciones": ["Agua solamente", "Material genético (ADN)", "Aire", "Azúcares"], "correcta": 1}, {"pregunta": "¿Cuál estructura es propia de las células vegetales?", "opciones": ["Mitocondria", "Pared celular", "Núcleo", "Membrana"], "correcta": 1}, {"pregunta": "La mitocondria se encarga de:", "opciones": ["Producir energía", "Guardar agua", "Digerir comida", "Formar pared"], "correcta": 0}, {"pregunta": "La membrana celular sirve para:", "opciones": ["Reproducir la célula", "Controlar lo que entra y sale", "Generar energía", "Almacenar ADN"], "correcta": 1}, {"pregunta": "Los cloroplastos realizan:", "opciones": ["Respiración celular", "Fotosíntesis", "División celular", "Reproducción"], "correcta": 1}, {"pregunta": "Los organismos unicelulares están formados por:", "opciones": ["Muchas células", "Una sola célula", "Ninguna célula", "Células vegetales solamente"], "correcta": 1}]}, {"id": "bio_03", "nombre": "Biodiversidad", "descripcion": "Reinos y clasificación de los seres vivos", "preguntas": [{"pregunta": "La biodiversidad se refiere a:", "opciones": ["Un solo tipo de ser vivo", "La variedad de seres vivos en la Tierra", "Los minerales", "Los planetas"], "correcta": 1}, {"pregunta": "¿Cuál NO es un reino de los seres vivos?", "opciones": ["Animal", "Vegetal", "Metálico", "Fungi (hongos)"], "correcta": 2}, {"pregunta": "Los mamíferos pertenecen al reino:", "opciones": ["Animal", "Vegetal", "Mineral", "Protista"], "correcta": 0}, {"pregunta": "Los árboles pertenecen al reino:", "opciones": ["Animal", "Vegetal (Plantae)", "Hongos", "Mineral"], "correcta": 1}, {"pregunta": "Los hongos pertenecen al reino:", "opciones": ["Animal", "Plantae", "Fungi", "Protista"], "correcta": 2}, {"pregunta": "Las bacterias pertenecen al reino:", "opciones": ["Animal", "Plantae", "Monera (bacterias)", "Fungi"], "correcta": 2}, {"pregunta": "Los vertebrados son animales con:", "opciones": ["Sin esqueleto", "Columna vertebral", "Ocho patas", "Escamas siempre"], "correcta": 1}, {"pregunta": "¿Cuál es un invertebrado?", "opciones": ["Perro", "Gato", "Mariposa", "Gallina"], "correcta": 2}, {"pregunta": "México es un país considerado:", "opciones": ["Pobre en biodiversidad", "Megadiverso", "Sin especies", "Solo desértico"], "correcta": 1}, {"pregunta": "La taxonomía se encarga de:", "opciones": ["Medir el clima", "Clasificar a los seres vivos", "Estudiar rocas", "Contar estrellas"], "correcta": 1}]}, {"id": "bio_04", "nombre": "Nutrición", "descripcion": "Cómo se alimentan los seres vivos", "preguntas": [{"pregunta": "La nutrición consiste en:", "opciones": ["Dormir bien", "Obtener y aprovechar los nutrientes", "Hacer ejercicio", "Respirar solamente"], "correcta": 1}, {"pregunta": "Los seres que producen su alimento se llaman:", "opciones": ["Heterótrofos", "Autótrofos", "Parásitos", "Carnívoros"], "correcta": 1}, {"pregunta": "Las plantas producen su alimento mediante:", "opciones": ["Digestión", "Fotosíntesis", "Respiración", "Fermentación"], "correcta": 1}, {"pregunta": "Los animales son seres:", "opciones": ["Autótrofos", "Heterótrofos", "Minerales", "Acuáticos solamente"], "correcta": 1}, {"pregunta": "Un herbívoro se alimenta de:", "opciones": ["Carne", "Plantas", "Otros animales", "Minerales"], "correcta": 1}, {"pregunta": "Un carnívoro se alimenta de:", "opciones": ["Plantas", "Carne de otros animales", "Frutas", "Semillas"], "correcta": 1}, {"pregunta": "Un omnívoro se alimenta de:", "opciones": ["Solo plantas", "Solo carne", "Plantas y animales", "Minerales"], "correcta": 2}, {"pregunta": "Los nutrientes que dan energía rápida son:", "opciones": ["Carbohidratos", "Vitaminas", "Agua", "Minerales"], "correcta": 0}, {"pregunta": "Las proteínas sirven principalmente para:", "opciones": ["Construir y reparar tejidos", "Dar color a la piel", "Enfermar al cuerpo", "Nada útil"], "correcta": 0}, {"pregunta": "Una dieta correcta debe ser:", "opciones": ["Solo dulces", "Variada y equilibrada", "Solo carne", "Sin frutas"], "correcta": 1}]}, {"id": "bio_05", "nombre": "Respiración", "descripcion": "Cómo obtenemos oxígeno", "preguntas": [{"pregunta": "La respiración sirve para:", "opciones": ["Eliminar oxígeno", "Obtener oxígeno y liberar dióxido de carbono", "Producir comida", "Pensar"], "correcta": 1}, {"pregunta": "Los humanos respiramos con:", "opciones": ["Branquias", "Pulmones", "Piel solamente", "Cola"], "correcta": 1}, {"pregunta": "Los peces respiran con:", "opciones": ["Pulmones", "Branquias", "Tráqueas", "Piel"], "correcta": 1}, {"pregunta": "Los insectos respiran con:", "opciones": ["Branquias", "Tráqueas", "Pulmones", "Boca"], "correcta": 1}, {"pregunta": "El gas que tomamos al inhalar es principalmente:", "opciones": ["Dióxido de carbono", "Oxígeno", "Hidrógeno", "Helio"], "correcta": 1}, {"pregunta": "El gas que liberamos al exhalar es principalmente:", "opciones": ["Oxígeno", "Dióxido de carbono", "Vapor de agua solo", "Nitrógeno"], "correcta": 1}, {"pregunta": "¿Qué órgano no forma parte del sistema respiratorio?", "opciones": ["Pulmón", "Tráquea", "Estómago", "Bronquios"], "correcta": 2}, {"pregunta": "La fotosíntesis y la respiración celular son procesos:", "opciones": ["Iguales", "Complementarios (uno usa lo que el otro produce)", "Sin relación", "Imposibles"], "correcta": 1}, {"pregunta": "Fumar daña principalmente:", "opciones": ["Los pulmones", "El hígado", "La piel", "Los huesos"], "correcta": 0}, {"pregunta": "El diafragma ayuda a:", "opciones": ["Digerir", "Respirar", "Ver", "Oír"], "correcta": 1}]}, {"id": "bio_06", "nombre": "Reproducción", "descripcion": "Sexual, asexual, gametos y ciclos", "preguntas": [{"pregunta": "La reproducción sexual tiene la ventaja evolutiva de:", "opciones": ["No requerir energía", "Producir variabilidad genética en la descendencia", "No requerir dos individuos", "Ser más rápida en todos los casos"], "correcta": 1}, {"pregunta": "Las células sexuales (gametos) tienen:", "opciones": ["El doble de cromosomas que las células comunes", "La mitad de cromosomas que las células somáticas", "Ningún cromosoma", "El mismo número que cualquier célula"], "correcta": 1}, {"pregunta": "La fecundación externa ocurre principalmente en:", "opciones": ["Mamíferos", "Peces y anfibios (en agua)", "Reptiles", "Aves"], "correcta": 1}, {"pregunta": "La gemación es una forma de reproducción asexual observada en:", "opciones": ["Humanos", "Hidras y levaduras", "Ballenas", "Perros"], "correcta": 1}, {"pregunta": "La fragmentación como forma de reproducción asexual implica:", "opciones": ["Huevos pequeños", "Un organismo se parte y cada parte origina uno nuevo", "Polen", "Dos progenitores"], "correcta": 1}, {"pregunta": "En las plantas con flores, la unión de polen con el óvulo ocurre en:", "opciones": ["La raíz", "El ovario (dentro de la flor)", "El tallo", "La hoja"], "correcta": 1}, {"pregunta": "Un animal ovíparo es aquel que:", "opciones": ["Se desarrolla dentro del cuerpo de la madre", "Pone huevos donde se desarrolla la cría", "Se divide en dos partes", "No se reproduce"], "correcta": 1}, {"pregunta": "Un animal vivíparo es aquel cuya cría:", "opciones": ["Nace ya desarrollada del cuerpo de la madre", "Sale de un huevo fuera", "Se divide solo", "Nace por esporas"], "correcta": 0}, {"pregunta": "La esporulación es una reproducción por:", "opciones": ["Esporas (células que germinan)", "Huevos", "Polen", "Semillas"], "correcta": 0}, {"pregunta": "La principal diferencia entre meiosis y mitosis es:", "opciones": ["La meiosis produce 2 células idénticas y la mitosis 4 diferentes", "La meiosis produce 4 células con la mitad de cromosomas; la mitosis, 2 idénticas", "Ambas son iguales", "Solo la mitosis ocurre en humanos"], "correcta": 1}]}, {"id": "bio_07", "nombre": "Salud y prevención", "descripcion": "Enfermedades, adicciones y hábitos", "preguntas": [{"pregunta": "Una enfermedad infecciosa se transmite por:", "opciones": ["Herencia genética exclusivamente", "Agentes patógenos (virus, bacterias, hongos, parásitos)", "Mala suerte", "Falta de dinero"], "correcta": 1}, {"pregunta": "El mosquito Aedes aegypti transmite:", "opciones": ["Cólera", "Dengue, Zika y chikungunya", "Tuberculosis", "Rubeola"], "correcta": 1}, {"pregunta": "Las vacunas funcionan porque:", "opciones": ["Eliminan todo tipo de microbios", "Estimulan al sistema inmune a producir defensas contra un patógeno específico", "Curan cualquier enfermedad ya existente", "Cambian el ADN"], "correcta": 1}, {"pregunta": "El VIH es un virus que afecta principalmente:", "opciones": ["Los pulmones", "El sistema inmunológico", "Los huesos", "El cabello"], "correcta": 1}, {"pregunta": "Una enfermedad crónica no transmisible es:", "opciones": ["Gripe", "Sarampión", "Diabetes tipo 2", "Varicela"], "correcta": 2}, {"pregunta": "La adicción a sustancias como alcohol y tabaco:", "opciones": ["Solo afecta al cuerpo, no a la mente", "Afecta salud física, mental y relaciones sociales", "Es inofensiva", "No produce dependencia"], "correcta": 1}, {"pregunta": "Un trastorno alimentario caracterizado por atracones y purgas es:", "opciones": ["Anorexia", "Bulimia", "Diabetes", "Gastritis"], "correcta": 1}, {"pregunta": "La principal medida preventiva ante las ITS es:", "opciones": ["Comer sano", "Información, uso correcto de protección y revisiones médicas", "Ejercicio diario", "Vitaminas"], "correcta": 1}, {"pregunta": "El sedentarismo se asocia con:", "opciones": ["Mayor riesgo de obesidad y enfermedades cardiovasculares", "Más salud", "Huesos más fuertes", "Menor estrés siempre"], "correcta": 0}, {"pregunta": "La OMS recomienda para adolescentes al menos:", "opciones": ["5 min de actividad al mes", "60 min de actividad física diaria (moderada a vigorosa)", "10 h de sueño obligatorias", "Saltarse el desayuno"], "correcta": 1}]}, {"id": "bio_08", "nombre": "Ecosistemas e interacciones", "descripcion": "Cadenas, pirámides y relaciones", "preguntas": [{"pregunta": "En una cadena alimentaria, la energía del Sol entra al ecosistema a través de:", "opciones": ["Los carnívoros", "Los productores (plantas, algas) mediante fotosíntesis", "Los descomponedores", "Los consumidores primarios"], "correcta": 1}, {"pregunta": "Aproximadamente, ¿qué porcentaje de la energía pasa de un nivel trófico al siguiente?", "opciones": ["1%", "10%", "50%", "90%"], "correcta": 1}, {"pregunta": "Una simbiosis en la que ambas especies se benefician se llama:", "opciones": ["Parasitismo", "Mutualismo", "Competencia", "Depredación"], "correcta": 1}, {"pregunta": "El parasitismo es una relación donde:", "opciones": ["Ambos se benefician", "Uno se beneficia y el otro es perjudicado", "Ninguno se afecta", "Ambos mueren siempre"], "correcta": 1}, {"pregunta": "Una rémora adherida a un tiburón que solo aprovecha restos de comida es un ejemplo de:", "opciones": ["Mutualismo", "Parasitismo", "Comensalismo (uno beneficia, el otro ni se beneficia ni se perjudica)", "Competencia"], "correcta": 2}, {"pregunta": "Los consumidores terciarios son:", "opciones": ["Los que comen plantas directamente", "Los que comen consumidores secundarios (carnívoros superiores)", "Los productores", "Bacterias"], "correcta": 1}, {"pregunta": "La sucesión ecológica es:", "opciones": ["La muerte total de un ecosistema", "El cambio progresivo de comunidades en un área con el tiempo", "La invasión de una sola especie", "Un tipo de clima"], "correcta": 1}, {"pregunta": "La biomasa en un ecosistema se refiere a:", "opciones": ["La cantidad de energía del Sol", "La masa total de materia viva en un nivel o área", "El agua disponible", "El aire presente"], "correcta": 1}, {"pregunta": "Si desaparecen los productores de un ecosistema:", "opciones": ["El ecosistema queda igual", "Se colapsa porque todos dependen de ellos", "Aumentan los herbívoros", "Solo afecta a las plantas"], "correcta": 1}, {"pregunta": "Una especie endémica es aquella que:", "opciones": ["Vive en todas partes del mundo", "Se encuentra solo en un área geográfica determinada", "Está extinta", "Es muy común"], "correcta": 1}]}, {"id": "bio_09", "nombre": "Herencia y evolución", "descripcion": "ADN, Mendel y selección natural", "preguntas": [{"pregunta": "El genotipo de un individuo es:", "opciones": ["Su apariencia externa", "El conjunto de genes que posee", "Su comportamiento", "Su grupo sanguíneo solamente"], "correcta": 1}, {"pregunta": "El fenotipo es:", "opciones": ["El ADN", "Las características observables del individuo (resultado de genotipo + ambiente)", "Un cromosoma", "Un tipo de célula"], "correcta": 1}, {"pregunta": "En Mendel, un alelo dominante se representa con:", "opciones": ["Una letra minúscula (ej: a)", "Una letra mayúscula (ej: A)", "Un número", "Un color"], "correcta": 1}, {"pregunta": "Si se cruzan AA × aa, el genotipo de la descendencia F1 será:", "opciones": ["Todos AA", "Todos aa", "Todos Aa (heterocigotos)", "Mitad AA y mitad aa"], "correcta": 2}, {"pregunta": "En un cruce Aa × Aa, la proporción fenotípica esperada es (si A domina):", "opciones": ["3:1 (dominante:recesivo)", "1:1", "Todos iguales", "1:3"], "correcta": 0}, {"pregunta": "Las pruebas fósiles, anatómicas y moleculares son evidencias de:", "opciones": ["La generación espontánea", "La teoría de la evolución", "La inmutabilidad de las especies", "El catastrofismo puro"], "correcta": 1}, {"pregunta": "Órganos homólogos (como la aleta de una ballena y el brazo humano) indican:", "opciones": ["Que no hay relación evolutiva", "Ancestro común con adaptaciones distintas", "Mismo ambiente actual", "Parentesco cercano exacto"], "correcta": 1}, {"pregunta": "La selección natural de Darwin implica que:", "opciones": ["Todos los organismos evolucionan igual", "Los individuos mejor adaptados tienen más probabilidad de sobrevivir y reproducirse", "Los más fuertes siempre ganan", "Los cambios son intencionales"], "correcta": 1}, {"pregunta": "La selección artificial se diferencia de la natural en que:", "opciones": ["Es realizada por el ser humano al elegir qué individuos se reproducen", "No existe", "Ocurre solo en plantas", "Es más lenta"], "correcta": 0}, {"pregunta": "Una mutación es:", "opciones": ["Una enfermedad siempre", "Un cambio en el material genético (ADN) que puede ser heredable", "Una alergia", "Un tipo de infección"], "correcta": 1}]}]}, {"id": "geografia", "nombre": "Geografía", "icono": "🌍", "color": "#0D9488", "descripcion": "El mundo, su espacio y sus habitantes", "temas": [{"id": "geo_01", "nombre": "El espacio geográfico", "descripcion": "Qué estudia la geografía", "preguntas": [{"pregunta": "La geografía estudia:", "opciones": ["Solo mapas", "El espacio donde vivimos y sus relaciones", "Solo ríos", "Solo animales"], "correcta": 1}, {"pregunta": "El espacio geográfico incluye:", "opciones": ["Solo elementos naturales", "Elementos naturales y sociales", "Solo ciudades", "Solo el mar"], "correcta": 1}, {"pregunta": "Un paisaje natural es aquel que:", "opciones": ["El ser humano ha modificado mucho", "No ha sido modificado por el ser humano", "Solo tiene edificios", "Solo tiene carros"], "correcta": 1}, {"pregunta": "Un paisaje cultural es:", "opciones": ["Modificado por las personas", "Totalmente natural", "Siempre en el campo", "Imaginario"], "correcta": 0}, {"pregunta": "¿Cuál es un componente natural del espacio geográfico?", "opciones": ["Una carretera", "Un río", "Un edificio", "Una fábrica"], "correcta": 1}, {"pregunta": "¿Cuál es un componente social?", "opciones": ["Una montaña", "Una ciudad", "El viento", "Un bosque natural"], "correcta": 1}, {"pregunta": "¿Cuál es un componente económico del espacio?", "opciones": ["Las agricultura y el comercio", "Los volcanes", "La lluvia", "Los animales salvajes"], "correcta": 0}, {"pregunta": "La escala local se refiere a:", "opciones": ["Todo el planeta", "Un área pequeña como una comunidad o ciudad", "Un continente", "Una galaxia"], "correcta": 1}, {"pregunta": "La escala mundial abarca:", "opciones": ["Un barrio", "Todo el planeta", "Una colonia", "Una casa"], "correcta": 1}, {"pregunta": "Los geógrafos utilizan mapas, imágenes satelitales y:", "opciones": ["Pinturas antiguas", "Sistemas de información geográfica (SIG)", "Adivinación", "Sueños"], "correcta": 1}]}, {"id": "geo_02", "nombre": "Mapas y coordenadas", "descripcion": "Representación de la Tierra", "preguntas": [{"pregunta": "Un mapa es:", "opciones": ["Una foto del cielo", "Una representación del espacio geográfico", "Un dibujo al azar", "Un libro"], "correcta": 1}, {"pregunta": "Un globo terráqueo representa:", "opciones": ["Solo un país", "La Tierra en forma esférica", "Solo los mares", "El sol"], "correcta": 1}, {"pregunta": "La escala de un mapa indica:", "opciones": ["El peso del mapa", "La relación entre medidas reales y las del mapa", "El color del mapa", "La edad del mapa"], "correcta": 1}, {"pregunta": "La rosa de los vientos muestra:", "opciones": ["Las estaciones del año", "Los puntos cardinales", "Los climas", "Las capitales"], "correcta": 1}, {"pregunta": "Los puntos cardinales son:", "opciones": ["Rojo, verde, azul, amarillo", "Norte, sur, este, oeste", "Montaña, mar, río, ciudad", "1, 2, 3, 4"], "correcta": 1}, {"pregunta": "Las líneas horizontales en el mapa se llaman:", "opciones": ["Meridianos", "Paralelos", "Ejes", "Radios"], "correcta": 1}, {"pregunta": "Las líneas verticales en el mapa se llaman:", "opciones": ["Paralelos", "Meridianos", "Latitudes", "Polos"], "correcta": 1}, {"pregunta": "El Ecuador es:", "opciones": ["Un meridiano", "El paralelo 0°", "Un polo", "Un país solamente"], "correcta": 1}, {"pregunta": "El meridiano de Greenwich es:", "opciones": ["El paralelo principal", "El meridiano 0°", "Un polo magnético", "Una ciudad mexicana"], "correcta": 1}, {"pregunta": "Las coordenadas geográficas son:", "opciones": ["Latitud y longitud", "Norte y sur solamente", "Colores del mapa", "Solo kilómetros"], "correcta": 0}]}, {"id": "geo_03", "nombre": "Continentes y océanos", "descripcion": "División del planeta", "preguntas": [{"pregunta": "¿Cuántos continentes hay (según la división más común)?", "opciones": ["3", "5", "6 o 7", "10"], "correcta": 2}, {"pregunta": "El continente donde vivimos es:", "opciones": ["Europa", "América", "Asia", "África"], "correcta": 1}, {"pregunta": "¿Cuál es el continente más grande?", "opciones": ["América", "África", "Asia", "Europa"], "correcta": 2}, {"pregunta": "¿Cuántos océanos hay?", "opciones": ["2", "3", "5", "8"], "correcta": 2}, {"pregunta": "¿Cuál es el océano más grande?", "opciones": ["Atlántico", "Índico", "Ártico", "Pacífico"], "correcta": 3}, {"pregunta": "México tiene costas en qué océano(s):", "opciones": ["Solo Atlántico", "Pacífico y Atlántico (golfo)", "Solo Ártico", "Ninguno"], "correcta": 1}, {"pregunta": "El continente más poblado es:", "opciones": ["Europa", "América", "Asia", "Oceanía"], "correcta": 2}, {"pregunta": "Oceanía es el continente con:", "opciones": ["Más países y tierra", "Principalmente islas y Australia", "Solo hielo", "Los desiertos más grandes"], "correcta": 1}, {"pregunta": "La Antártida se caracteriza por:", "opciones": ["Ser un desierto cálido", "Estar cubierta de hielo", "Tener muchas ciudades", "Ser un océano"], "correcta": 1}, {"pregunta": "El océano Atlántico separa a:", "opciones": ["Asia y África", "América de Europa y África", "Oceanía y Asia", "Polos entre sí"], "correcta": 1}]}, {"id": "geo_04", "nombre": "Relieve terrestre", "descripcion": "Montañas, llanuras y más", "preguntas": [{"pregunta": "El relieve es:", "opciones": ["El clima", "Las formas de la superficie terrestre", "El aire", "La vegetación"], "correcta": 1}, {"pregunta": "Una montaña es una elevación:", "opciones": ["Baja y plana", "Grande y alta del terreno", "Submarina pequeña", "Imaginaria"], "correcta": 1}, {"pregunta": "Una llanura es una zona:", "opciones": ["Muy alta", "Plana o con poca pendiente", "De ríos únicamente", "De agua"], "correcta": 1}, {"pregunta": "Una meseta es:", "opciones": ["Una mesa", "Una llanura elevada", "Un río", "Un lago"], "correcta": 1}, {"pregunta": "Un valle es:", "opciones": ["Una planicie entre montañas", "La cima de un cerro", "Un mar", "Un volcán"], "correcta": 0}, {"pregunta": "El Everest es el relieve más:", "opciones": ["Bajo del mundo", "Alto del mundo", "Redondo", "Pequeño"], "correcta": 1}, {"pregunta": "Un volcán es una montaña:", "opciones": ["De hielo", "Con magma en su interior", "De plástico", "Artificial siempre"], "correcta": 1}, {"pregunta": "Una isla es:", "opciones": ["Porción de tierra rodeada de agua", "Una montaña muy alta", "Un desierto", "Un bosque"], "correcta": 0}, {"pregunta": "Una península es:", "opciones": ["Totalmente rodeada de agua", "Rodeada de agua excepto por un lado", "Una cueva", "Un lago"], "correcta": 1}, {"pregunta": "Las placas tectónicas, al chocar, pueden formar:", "opciones": ["Ríos dulces", "Montañas y terremotos", "Desiertos siempre", "Solo valles"], "correcta": 1}]}, {"id": "geo_05", "nombre": "Hidrografía", "descripcion": "Aguas del planeta", "preguntas": [{"pregunta": "La hidrografía estudia:", "opciones": ["Los vientos", "Las aguas de la Tierra", "Los suelos", "Los animales"], "correcta": 1}, {"pregunta": "El agua de los océanos es:", "opciones": ["Dulce", "Salada", "Potable sin tratar", "Gaseosa"], "correcta": 1}, {"pregunta": "La mayor parte del agua dulce está en:", "opciones": ["Ríos", "Glaciares y hielo polar", "Nubes", "Lagos"], "correcta": 1}, {"pregunta": "Un río es:", "opciones": ["Agua estancada", "Corriente de agua dulce que fluye", "Agua del mar", "Nube baja"], "correcta": 1}, {"pregunta": "Un lago es:", "opciones": ["Agua corriente", "Agua acumulada en tierra", "Mar pequeño", "Océano frío"], "correcta": 1}, {"pregunta": "El ciclo del agua incluye:", "opciones": ["Solo lluvia", "Evaporación, condensación y precipitación", "Solo nubes", "Solo viento"], "correcta": 1}, {"pregunta": "Los mantos acuíferos son:", "opciones": ["Aguas subterráneas", "Nubes altas", "Lagos salados", "Ríos de lava"], "correcta": 0}, {"pregunta": "El río más largo del mundo es (según varias fuentes):", "opciones": ["El Nilo o el Amazonas", "El Sena", "El Rin", "El Bravo"], "correcta": 0}, {"pregunta": "El agua potable es la que:", "opciones": ["Se puede beber sin dañar la salud", "Solo sirve para regar", "Es de mar", "Está contaminada"], "correcta": 0}, {"pregunta": "¿Qué porcentaje aproximado del planeta está cubierto por agua?", "opciones": ["10%", "30%", "50%", "Cerca del 70%"], "correcta": 3}]}, {"id": "geo_06", "nombre": "Climas y factores", "descripcion": "Factores climáticos, climogramas y biomas", "preguntas": [{"pregunta": "¿Cuál NO es un factor que determina el clima de una región?", "opciones": ["Latitud", "Altitud", "Cercanía al mar", "Color del suelo visto desde el aire"], "correcta": 3}, {"pregunta": "A mayor latitud (más cerca de los polos):", "opciones": ["El clima tiende a ser más cálido", "El clima tiende a ser más frío", "No hay relación", "Llueve más siempre"], "correcta": 1}, {"pregunta": "En climas de alta montaña, al subir cada 1,000 m la temperatura baja aproximadamente:", "opciones": ["0.1 °C", "6.5 °C", "20 °C", "50 °C"], "correcta": 1}, {"pregunta": "El fenómeno de \"El Niño\" se asocia con:", "opciones": ["Frío extremo global", "Calentamiento anormal de aguas del Pacífico con efectos climáticos globales", "Terremotos", "Nevadas en el Ecuador"], "correcta": 1}, {"pregunta": "Un bioma es:", "opciones": ["Una célula", "Una gran región ecológica con clima y vegetación característicos", "Un país", "Un tipo de nube"], "correcta": 1}, {"pregunta": "La tundra es un bioma:", "opciones": ["Tropical y cálido", "Frío con suelo helado (permafrost) la mayor parte del año", "Desértico cálido", "Marino profundo"], "correcta": 1}, {"pregunta": "La selva tropical se caracteriza por:", "opciones": ["Clima frío seco", "Altas temperaturas, lluvias abundantes y biodiversidad alta", "Ningún árbol", "Vientos fuertes continuos"], "correcta": 1}, {"pregunta": "Un climograma representa:", "opciones": ["Altitudes del terreno", "Temperatura y precipitación mensual de un lugar", "Movimientos sísmicos", "Corrientes marinas"], "correcta": 1}, {"pregunta": "Las corrientes marinas cálidas que llegan a una costa:", "opciones": ["La hacen más seca y fría", "Suelen suavizar el clima haciéndolo más húmedo y templado", "No influyen", "Producen desiertos"], "correcta": 1}, {"pregunta": "El clima mediterráneo se caracteriza por:", "opciones": ["Veranos secos y calurosos, inviernos suaves y lluviosos", "Frío todo el año", "Lluvia constante", "Nevadas intensas todo el año"], "correcta": 0}]}, {"id": "geo_07", "nombre": "Población y migración", "descripcion": "Indicadores demográficos y pirámides", "preguntas": [{"pregunta": "La densidad de población se calcula como:", "opciones": ["Habitantes × km²", "Habitantes / km²", "km² / habitantes", "Edad promedio × población"], "correcta": 1}, {"pregunta": "Una pirámide poblacional con base ancha indica:", "opciones": ["Una población envejecida", "Alta natalidad, población joven", "Una extinción", "Solo ancianos"], "correcta": 1}, {"pregunta": "Una pirámide estrecha en la base indica:", "opciones": ["Alta natalidad", "Población que envejece, baja natalidad", "Solo niños", "Error estadístico"], "correcta": 1}, {"pregunta": "La tasa de mortalidad mide:", "opciones": ["Nacimientos", "Muertes por cada 1,000 habitantes en un periodo", "Migrantes", "Esperanza de vida"], "correcta": 1}, {"pregunta": "El crecimiento natural de la población se obtiene:", "opciones": ["Nacimientos + muertes", "Nacimientos − muertes", "Nacimientos × migración", "Muertes − migración"], "correcta": 1}, {"pregunta": "Una causa económica común de migración es:", "opciones": ["Curiosidad por viajar", "Búsqueda de empleo y mejores ingresos", "Moda", "Deportes"], "correcta": 1}, {"pregunta": "La emigración se refiere a:", "opciones": ["Llegar a un país nuevo", "Salir del lugar de origen hacia otro", "Quedarse en casa", "Volar en avión"], "correcta": 1}, {"pregunta": "La inmigración es:", "opciones": ["Llegar a un nuevo lugar de residencia", "Salir de un país", "Viajar temporalmente", "Morir en otro país"], "correcta": 0}, {"pregunta": "La urbanización es:", "opciones": ["Disminución de ciudades", "Aumento de la población que vive en ciudades", "Una enfermedad", "Un tipo de clima"], "correcta": 1}, {"pregunta": "Un país con envejecimiento poblacional probablemente enfrenta:", "opciones": ["Muchos niños y pocas escuelas", "Mayor demanda de salud y pensiones, menos fuerza laboral joven", "Escasez de ancianos", "Ningún reto"], "correcta": 1}]}, {"id": "geo_08", "nombre": "Recursos y actividades económicas", "descripcion": "Sectores productivos y sustentabilidad", "preguntas": [{"pregunta": "Las actividades del sector primario son:", "opciones": ["Industria manufacturera", "Agricultura, ganadería, pesca y minería (extractivas)", "Comercio y servicios", "Bancos"], "correcta": 1}, {"pregunta": "El sector secundario incluye:", "opciones": ["Agricultura", "Industria y transformación de materias primas", "Turismo", "Educación"], "correcta": 1}, {"pregunta": "El sector terciario corresponde a:", "opciones": ["Servicios y comercio", "Minería", "Pesca", "Manufactura pesada"], "correcta": 0}, {"pregunta": "La agricultura de riego se distingue de la de temporal porque:", "opciones": ["Usa agua controlada (canales, aspersión, goteo) no solo lluvia", "Depende totalmente de la lluvia", "No requiere agua", "Es siempre orgánica"], "correcta": 0}, {"pregunta": "Un recurso renovable mal manejado puede:", "opciones": ["Nunca acabarse", "Agotarse o deteriorarse si se explota más rápido de lo que se regenera", "Duplicarse", "Convertirse en mineral"], "correcta": 1}, {"pregunta": "La energía geotérmica se obtiene de:", "opciones": ["El viento", "El calor interno de la Tierra", "El Sol", "El agua dulce"], "correcta": 1}, {"pregunta": "La minería extrae recursos como:", "opciones": ["Aire y luz", "Minerales, metales y combustibles fósiles", "Agua dulce únicamente", "Plantas"], "correcta": 1}, {"pregunta": "El desarrollo sustentable pretende:", "opciones": ["Satisfacer necesidades actuales sin comprometer las de generaciones futuras", "Agotar todos los recursos rápido", "Ignorar el ambiente", "Solo crecer económicamente"], "correcta": 0}, {"pregunta": "La globalización económica implica:", "opciones": ["Menos comercio entre países", "Mayor interconexión del comercio, capital e información global", "Autarquía", "Un solo país dominando"], "correcta": 1}, {"pregunta": "Un país que exporta principalmente materias primas sin transformar es más vulnerable a:", "opciones": ["Cambios en los precios internacionales de esas materias", "Ser invisible en el comercio", "Mejor desarrollo automático", "Tener menos competencia siempre"], "correcta": 0}]}, {"id": "geo_09", "nombre": "Problemas ambientales globales", "descripcion": "Cambio climático, biodiversidad y acuerdos", "preguntas": [{"pregunta": "El efecto invernadero es:", "opciones": ["Un fenómeno dañino inventado", "Un proceso natural de retención de calor en la atmósfera, intensificado por gases como CO₂", "Algo que solo ocurre en invernaderos", "Una enfermedad"], "correcta": 1}, {"pregunta": "La capa de ozono protege a la vida de:", "opciones": ["La lluvia", "La radiación ultravioleta del Sol", "Los meteoritos", "Los vientos"], "correcta": 1}, {"pregunta": "El Acuerdo de París (2015) busca:", "opciones": ["Aumentar emisiones", "Limitar el aumento de la temperatura global (idealmente 1.5 °C)", "Cerrar fronteras", "Promover carbón"], "correcta": 1}, {"pregunta": "La huella ecológica mide:", "opciones": ["El tamaño del zapato", "El impacto ambiental de una persona, comunidad o país en términos de área productiva", "La belleza natural", "La cantidad de parques"], "correcta": 1}, {"pregunta": "La eutrofización de un lago se produce por:", "opciones": ["Exceso de nutrientes (fertilizantes, aguas residuales) que provocan algas y muerte de oxígeno", "Sequía prolongada", "Viento fuerte", "Falta de plantas"], "correcta": 0}, {"pregunta": "La pérdida de biodiversidad se debe principalmente a:", "opciones": ["Razones desconocidas", "Destrucción de hábitats, contaminación, especies invasoras y sobreexplotación", "Aumento natural de especies", "El paso del tiempo"], "correcta": 1}, {"pregunta": "Las islas de calor urbano son:", "opciones": ["Playas tropicales", "Zonas urbanas significativamente más calientes que el campo circundante por concreto, asfalto y emisiones", "Islas pequeñas del Caribe", "Reservas ecológicas"], "correcta": 1}, {"pregunta": "El problema de los microplásticos en el océano se debe principalmente a:", "opciones": ["Erosión natural de rocas", "Fragmentación de residuos plásticos no degradables", "Peces que los producen", "Sales marinas"], "correcta": 1}, {"pregunta": "La deforestación contribuye al cambio climático porque:", "opciones": ["Reduce la capacidad de absorber CO₂ y libera carbono almacenado", "Enfría el planeta", "Produce más lluvia siempre", "Aumenta la biodiversidad"], "correcta": 0}, {"pregunta": "Una estrategia ciudadana efectiva es:", "opciones": ["Consumir más", "Reducir, reutilizar, reciclar y consumir con conciencia ambiental", "Ignorar el problema", "Tirar basura oculta"], "correcta": 1}]}]}, {"id": "historia", "nombre": "Historia", "icono": "🏛️", "color": "#B45309", "descripcion": "Historia del mundo", "temas": [{"id": "his_01", "nombre": "Prehistoria", "descripcion": "Antes de la escritura", "preguntas": [{"pregunta": "La prehistoria es el periodo:", "opciones": ["Después de la invención de la escritura", "Antes de la invención de la escritura", "De la Edad Media", "Del siglo XX"], "correcta": 1}, {"pregunta": "Los primeros humanos eran:", "opciones": ["Agricultores", "Nómadas cazadores y recolectores", "Industriales", "Mercaderes"], "correcta": 1}, {"pregunta": "Se divide en Paleolítico, Mesolítico y:", "opciones": ["Clásico", "Neolítico", "Barroco", "Romanticismo"], "correcta": 1}, {"pregunta": "En el Paleolítico, los humanos usaban herramientas de:", "opciones": ["Acero", "Piedra tallada", "Plástico", "Oro"], "correcta": 1}, {"pregunta": "El dominio del fuego fue importante porque:", "opciones": ["No tuvo uso", "Permitió cocinar, calentarse y alejar animales", "Solo servía de adorno", "Dañó al ser humano"], "correcta": 1}, {"pregunta": "En el Neolítico surgió:", "opciones": ["La agricultura y el sedentarismo", "La energía nuclear", "La computadora", "El automóvil"], "correcta": 0}, {"pregunta": "Ser sedentario significa:", "opciones": ["Moverse siempre", "Establecerse en un mismo lugar", "Vivir en cuevas forzosamente", "No trabajar"], "correcta": 1}, {"pregunta": "Las pinturas rupestres son:", "opciones": ["Pinturas modernas", "Pinturas prehistóricas en cuevas", "Cuadros del Renacimiento", "Graffitis recientes"], "correcta": 1}, {"pregunta": "La domesticación de animales ocurrió en:", "opciones": ["El Paleolítico", "El Neolítico", "La Edad Media", "El siglo XIX"], "correcta": 1}, {"pregunta": "La Edad de los Metales siguió al:", "opciones": ["Siglo XX", "Neolítico (cobre, bronce, hierro)", "Renacimiento", "Barroco"], "correcta": 1}]}, {"id": "his_02", "nombre": "Civilizaciones antiguas", "descripcion": "Mesopotamia y Egipto", "preguntas": [{"pregunta": "Mesopotamia se ubicaba entre los ríos:", "opciones": ["Nilo y Amazonas", "Tigris y Éufrates", "Rin y Danubio", "Bravo y Amarillo"], "correcta": 1}, {"pregunta": "La escritura cuneiforme se originó en:", "opciones": ["Egipto", "Mesopotamia", "Grecia", "China"], "correcta": 1}, {"pregunta": "La civilización egipcia se desarrolló a orillas del río:", "opciones": ["Tigris", "Nilo", "Ganges", "Amazonas"], "correcta": 1}, {"pregunta": "Los faraones eran:", "opciones": ["Dioses únicamente", "Gobernantes del antiguo Egipto", "Soldados rasos", "Simples agricultores"], "correcta": 1}, {"pregunta": "Las pirámides de Egipto servían como:", "opciones": ["Casas normales", "Tumbas y monumentos para faraones", "Mercados", "Cuarteles"], "correcta": 1}, {"pregunta": "La escritura egipcia se llama:", "opciones": ["Cuneiforme", "Jeroglífica", "Latina", "Árabe"], "correcta": 1}, {"pregunta": "El Código de Hammurabi es:", "opciones": ["Un libro de cuentos", "Uno de los primeros conjuntos de leyes escritas", "Un poema", "Un mapa"], "correcta": 1}, {"pregunta": "Los egipcios creían en:", "opciones": ["Un solo dios siempre", "Muchos dioses (politeísmo)", "Nada", "Solo héroes humanos"], "correcta": 1}, {"pregunta": "El proceso para conservar cuerpos en Egipto se llamaba:", "opciones": ["Crucifixión", "Momificación", "Incineración", "Congelación"], "correcta": 1}, {"pregunta": "Los sumerios son considerados:", "opciones": ["Una tribu moderna", "Una de las primeras civilizaciones de la historia", "Europeos medievales", "Romanos tardíos"], "correcta": 1}]}, {"id": "his_03", "nombre": "Grecia antigua", "descripcion": "Cuna de la democracia", "preguntas": [{"pregunta": "Grecia antigua estaba formada por:", "opciones": ["Un solo gran imperio", "Ciudades-Estado independientes (polis)", "Una república única", "Una colonia"], "correcta": 1}, {"pregunta": "Dos polis importantes fueron:", "opciones": ["Madrid y Barcelona", "Atenas y Esparta", "Roma y París", "Tokio y Seúl"], "correcta": 1}, {"pregunta": "La democracia nació en:", "opciones": ["Esparta", "Atenas", "Roma", "Tebas"], "correcta": 1}, {"pregunta": "Los atletas competían cada cuatro años en:", "opciones": ["Guerras", "Los Juegos Olímpicos", "Mercados", "Festivales religiosos cualesquiera"], "correcta": 1}, {"pregunta": "Un filósofo griego famoso fue:", "opciones": ["Julio César", "Sócrates", "Napoleón", "Colón"], "correcta": 1}, {"pregunta": "Alejandro Magno era de:", "opciones": ["Roma", "Macedonia (Grecia)", "Egipto", "Persia"], "correcta": 1}, {"pregunta": "Los griegos creían en dioses como:", "opciones": ["Zeus, Atenea, Apolo", "Ra y Osiris", "Júpiter y Marte", "Quetzalcóatl"], "correcta": 0}, {"pregunta": "La Acrópolis y el Partenón se encuentran en:", "opciones": ["Esparta", "Atenas", "Roma", "París"], "correcta": 1}, {"pregunta": "Esparta se caracterizaba por:", "opciones": ["Su arte", "Su formación militar", "Su teatro", "Su comercio"], "correcta": 1}, {"pregunta": "El teatro griego incluía géneros como:", "opciones": ["Solo comedia", "Tragedia y comedia", "Ópera moderna", "Rock"], "correcta": 1}]}, {"id": "his_04", "nombre": "Roma antigua", "descripcion": "Un imperio gigantesco", "preguntas": [{"pregunta": "Según la leyenda, Roma fue fundada por:", "opciones": ["Julio César", "Rómulo y Remo", "Aníbal", "Constantino"], "correcta": 1}, {"pregunta": "Roma pasó por etapas de Monarquía, República e:", "opciones": ["Emirato", "Imperio", "Dictadura moderna", "Democracia actual"], "correcta": 1}, {"pregunta": "Julio César fue:", "opciones": ["Un faraón", "Un general y líder romano", "Un filósofo griego", "Un emperador francés"], "correcta": 1}, {"pregunta": "El idioma oficial del Imperio Romano era:", "opciones": ["Griego solamente", "Latín", "Italiano", "Español"], "correcta": 1}, {"pregunta": "El Coliseo Romano se usaba principalmente para:", "opciones": ["Mercados", "Espectáculos de gladiadores y juegos", "Vivir los pobres", "Guardar cosechas"], "correcta": 1}, {"pregunta": "El cristianismo se convirtió en religión oficial del imperio con:", "opciones": ["Nerón", "Constantino (y luego Teodosio)", "Calígula", "César Augusto"], "correcta": 1}, {"pregunta": "La caída del Imperio Romano de Occidente ocurrió en el año:", "opciones": ["1492", "476 d.C.", "1000 d.C.", "2000 d.C."], "correcta": 1}, {"pregunta": "Una aportación romana fue:", "opciones": ["La computadora", "El derecho romano y la ingeniería civil", "Los autos", "El internet"], "correcta": 1}, {"pregunta": "Los acueductos romanos servían para:", "opciones": ["Guerras", "Transportar agua", "Enterrar", "Volar"], "correcta": 1}, {"pregunta": "La religión romana original era:", "opciones": ["Monoteísta", "Politeísta", "Atea", "Budista"], "correcta": 1}]}, {"id": "his_05", "nombre": "Edad Media", "descripcion": "Del siglo V al XV", "preguntas": [{"pregunta": "La Edad Media duró aproximadamente:", "opciones": ["100 años", "Casi mil años (siglos V a XV)", "50 años", "20 siglos"], "correcta": 1}, {"pregunta": "El sistema económico y social medieval se llamó:", "opciones": ["Capitalismo", "Feudalismo", "Socialismo", "Comunismo"], "correcta": 1}, {"pregunta": "Un señor feudal era:", "opciones": ["Un esclavo", "Dueño de tierras con vasallos a su servicio", "Un rey mundial", "Un emperador de Asia"], "correcta": 1}, {"pregunta": "Los campesinos que trabajaban la tierra se llamaban:", "opciones": ["Siervos", "Reyes", "Nobles", "Sacerdotes únicamente"], "correcta": 0}, {"pregunta": "La religión dominante en Europa medieval fue:", "opciones": ["Budismo", "Cristianismo", "Hinduismo", "Islam (en todas partes)"], "correcta": 1}, {"pregunta": "Las Cruzadas fueron:", "opciones": ["Viajes turísticos", "Expediciones militares cristianas hacia Tierra Santa", "Fiestas medievales", "Obras de teatro"], "correcta": 1}, {"pregunta": "El Imperio Bizantino tenía su capital en:", "opciones": ["Roma", "Constantinopla", "Madrid", "El Cairo"], "correcta": 1}, {"pregunta": "La peste negra del siglo XIV:", "opciones": ["Fue una pandemia que mató a millones en Europa", "Fue un invento", "Solo afectó animales", "Duró un día"], "correcta": 0}, {"pregunta": "Los castillos medievales servían para:", "opciones": ["Guardería infantil", "Defensa y residencia de nobles", "Mercados libres", "Bibliotecas públicas"], "correcta": 1}, {"pregunta": "La Edad Media termina con la caída de Constantinopla en:", "opciones": ["476", "1453", "1492", "1776"], "correcta": 1}]}, {"id": "his_06", "nombre": "Renacimiento y encuentro de mundos", "descripcion": "Humanismo, descubrimientos y conquista", "preguntas": [{"pregunta": "El humanismo renacentista colocó en el centro del pensamiento:", "opciones": ["A Dios únicamente", "Al ser humano, su razón y obra", "A los reyes", "A la naturaleza salvaje"], "correcta": 1}, {"pregunta": "Nicolás Copérnico aportó la teoría:", "opciones": ["Geocéntrica", "Heliocéntrica (Sol al centro)", "Atómica", "Gravitacional"], "correcta": 1}, {"pregunta": "Una obra emblemática de Leonardo da Vinci es:", "opciones": ["El Pensador", "La Mona Lisa / La Gioconda", "La Venus de Milo", "El David"], "correcta": 1}, {"pregunta": "Miguel Ángel pintó el techo de:", "opciones": ["La catedral de Florencia", "La Capilla Sixtina en el Vaticano", "Notre Dame", "El Louvre"], "correcta": 1}, {"pregunta": "Martín Lutero inició la Reforma protestante al:", "opciones": ["Quemar libros", "Publicar sus 95 tesis contra prácticas de la Iglesia católica (1517)", "Fundar la inquisición", "Coronarse rey"], "correcta": 1}, {"pregunta": "La Contrarreforma fue la respuesta católica mediante:", "opciones": ["El Concilio de Trento y la Compañía de Jesús", "Ignorar la Reforma", "Protestar contra Lutero sin organización", "Cerrar iglesias"], "correcta": 0}, {"pregunta": "Hernán Cortés derrotó al Imperio Mexica con apoyo de:", "opciones": ["El rey de Francia", "Pueblos enemigos de los mexicas (tlaxcaltecas, entre otros)", "Los incas", "Los mayas"], "correcta": 1}, {"pregunta": "Francisco Pizarro conquistó:", "opciones": ["A los mexicas", "Al Imperio Inca", "A los mayas", "A los bizantinos"], "correcta": 1}, {"pregunta": "El intercambio colombino implicó la circulación global de:", "opciones": ["Solo oro", "Personas, plantas, animales, enfermedades y cultura entre Europa y América", "Solo enfermedades", "Solo idiomas"], "correcta": 1}, {"pregunta": "Una consecuencia demográfica del contacto europeo-americano fue:", "opciones": ["Aumento inmediato de indígenas", "Caída demográfica enorme entre indígenas por enfermedades como viruela", "Ningún cambio", "Aumento de europeos en Europa"], "correcta": 1}]}, {"id": "his_07", "nombre": "Revoluciones e Ilustración", "descripcion": "Ilustración, Revolución Francesa e Industrial", "preguntas": [{"pregunta": "La Ilustración propuso que el poder del gobierno reside en:", "opciones": ["Un rey designado por Dios", "El pueblo (soberanía popular) y la razón", "Un solo filósofo", "Ningún poder"], "correcta": 1}, {"pregunta": "Montesquieu propuso:", "opciones": ["La abolición de los reyes", "La división de poderes (ejecutivo, legislativo, judicial)", "El socialismo", "El liberalismo económico únicamente"], "correcta": 1}, {"pregunta": "Rousseau escribió sobre:", "opciones": ["El contrato social y la voluntad general", "La ley de gravedad", "La anatomía humana", "Estrellas y planetas"], "correcta": 0}, {"pregunta": "Una causa de la Revolución Francesa fue:", "opciones": ["Hambre, desigualdad entre estamentos e influencia ilustrada", "Exceso de riqueza equitativa", "Paz absoluta", "Falta de pensadores"], "correcta": 0}, {"pregunta": "La \"Declaración de los Derechos del Hombre y del Ciudadano\" (1789) proclamó:", "opciones": ["Libertad, igualdad y propiedad como derechos", "La monarquía absoluta", "La Inquisición", "El colonialismo"], "correcta": 0}, {"pregunta": "Maximilien Robespierre es conocido por liderar:", "opciones": ["La restauración del rey", "La época del Terror durante la Revolución Francesa", "La independencia norteamericana", "La guerra de Crimea"], "correcta": 1}, {"pregunta": "La máquina de vapor de James Watt permitió:", "opciones": ["El transporte y la producción industrial a mayor escala", "La agricultura tradicional", "Viajes espaciales", "Comunicaciones por radio"], "correcta": 0}, {"pregunta": "La Revolución Industrial transformó la sociedad creando:", "opciones": ["Una burguesía industrial y una clase obrera (proletariado)", "Solo nobles y campesinos", "Ningún cambio social", "Más esclavos"], "correcta": 0}, {"pregunta": "Karl Marx y Friedrich Engels criticaron el capitalismo industrial en:", "opciones": ["\"El contrato social\"", "\"El manifiesto comunista\" (1848)", "\"El príncipe\"", "\"Sobre el origen de las especies\""], "correcta": 1}, {"pregunta": "Napoleón Bonaparte difundió por Europa:", "opciones": ["El absolutismo feudal", "Principios revolucionarios como el Código Civil y reformas legales", "El Imperio Romano", "La Edad Media"], "correcta": 1}]}, {"id": "his_08", "nombre": "Siglo XX: guerras y Guerra Fría", "descripcion": "I y II Guerra Mundial, posguerra", "preguntas": [{"pregunta": "El detonante inmediato de la Primera Guerra Mundial fue:", "opciones": ["La caída de Roma", "El asesinato del archiduque Francisco Fernando de Austria (1914)", "La Revolución Francesa", "La II Guerra"], "correcta": 1}, {"pregunta": "El Tratado de Versalles (1919) impuso condiciones duras a:", "opciones": ["Francia", "Alemania (reparaciones, pérdida de territorios, limitación militar)", "Estados Unidos", "Rusia"], "correcta": 1}, {"pregunta": "La Revolución Rusa de 1917 llevó al poder a:", "opciones": ["Los monárquicos", "Los bolcheviques bajo Lenin", "Los nazis", "Los fascistas italianos"], "correcta": 1}, {"pregunta": "El fascismo italiano fue liderado por:", "opciones": ["Stalin", "Mussolini", "Hitler", "Churchill"], "correcta": 1}, {"pregunta": "La II Guerra Mundial inició en 1939 con:", "opciones": ["El ataque a Pearl Harbor", "La invasión alemana a Polonia", "La caída de París", "Hiroshima"], "correcta": 1}, {"pregunta": "El ataque japonés a Pearl Harbor (1941) hizo que:", "opciones": ["Japón abandonara la guerra", "Estados Unidos entrara oficialmente a la II Guerra", "Italia rindiera a los aliados", "Se firmara la paz"], "correcta": 1}, {"pregunta": "El desembarco en Normandía (Día D, 1944) fue clave para:", "opciones": ["La recuperación de Europa occidental por los aliados", "El inicio de la guerra", "La invasión de Japón", "La caída de Rusia"], "correcta": 0}, {"pregunta": "La Guerra Fría fue un conflicto:", "opciones": ["Militar directo entre EE.UU. y URSS", "Ideológico, económico y geopolítico sin guerra abierta directa entre las superpotencias", "Solo económico", "Medieval"], "correcta": 1}, {"pregunta": "La crisis de los misiles en Cuba (1962) enfrentó a:", "opciones": ["México y Cuba", "EE.UU. y la URSS, con Cuba como escenario", "China y Japón", "Inglaterra y Argentina"], "correcta": 1}, {"pregunta": "La Guerra de Vietnam fue un enfrentamiento entre:", "opciones": ["Francia y Alemania", "Vietnam del Norte comunista (apoyado por la URSS) y Vietnam del Sur (apoyado por EE.UU.)", "China y Corea", "India y Pakistán"], "correcta": 1}]}, {"id": "his_09", "nombre": "Mundo actual", "descripcion": "Globalización, tecnología y retos", "preguntas": [{"pregunta": "La caída del Muro de Berlín (1989) simbolizó:", "opciones": ["El inicio de la II Guerra Mundial", "El fin de la Guerra Fría y la reunificación alemana", "La Revolución Francesa", "La caída de Roma"], "correcta": 1}, {"pregunta": "La Unión Europea se consolidó con el Tratado de:", "opciones": ["Versalles", "Maastricht (1992)", "París de 1763", "Kioto"], "correcta": 1}, {"pregunta": "El 11 de septiembre de 2001 tuvo como consecuencia directa:", "opciones": ["La invasión a Afganistán y luego a Irak por EE.UU. en la \"guerra contra el terrorismo\"", "El fin de la ONU", "La caída de la Unión Soviética", "La creación del euro"], "correcta": 0}, {"pregunta": "La crisis financiera de 2008 se originó en:", "opciones": ["La burbuja inmobiliaria e hipotecas subprime en Estados Unidos", "Una guerra mundial", "Un terremoto en Japón", "La caída del petróleo únicamente"], "correcta": 0}, {"pregunta": "La Primavera Árabe (2010-2012) fue:", "opciones": ["Una serie de protestas y revueltas en países árabes", "Una festividad religiosa", "Un tratado comercial", "Una guerra entre europeos"], "correcta": 0}, {"pregunta": "Los Objetivos de Desarrollo Sostenible (ODS) de la ONU son:", "opciones": ["17 metas globales al 2030 (pobreza, hambre, educación, clima, etc.)", "Un partido político", "Una empresa", "Un deporte"], "correcta": 0}, {"pregunta": "La pandemia de COVID-19 fue declarada por la OMS en:", "opciones": ["Diciembre de 2019", "Marzo de 2020", "Julio de 2021", "2023"], "correcta": 1}, {"pregunta": "Un reto central del siglo XXI es:", "opciones": ["El cambio climático y la transición energética", "Volver a la Edad Media", "Redescubrir América", "Ningún reto"], "correcta": 0}, {"pregunta": "La revolución digital ha generado:", "opciones": ["Menor conectividad", "Transformación en comunicación, trabajo, educación y relaciones sociales", "Ningún impacto", "Solo retroceso tecnológico"], "correcta": 1}, {"pregunta": "La inteligencia artificial generativa masiva se popularizó a inicios de:", "opciones": ["Los años 1980", "La década de 2020 (con modelos como ChatGPT y similares)", "El siglo XIX", "La Edad Media"], "correcta": 1}]}]}, {"id": "fcye", "nombre": "Formación Cívica y Ética", "icono": "⚖️", "color": "#7C3AED", "descripcion": "Valores, derechos y convivencia", "temas": [{"id": "fce_01", "nombre": "Adolescencia", "descripcion": "Cambios y características", "preguntas": [{"pregunta": "La adolescencia es:", "opciones": ["Solo una edad legal", "La etapa de transición entre la niñez y la adultez", "Una enfermedad", "Solo cambio de peso"], "correcta": 1}, {"pregunta": "En la adolescencia ocurren cambios:", "opciones": ["Solo físicos", "Físicos, emocionales y sociales", "Solo mentales", "Solo económicos"], "correcta": 1}, {"pregunta": "Un cambio físico común en la adolescencia es:", "opciones": ["Crecimiento rápido", "Encogimiento", "Pérdida total del cabello", "Caminar menos"], "correcta": 0}, {"pregunta": "La pubertad comienza por cambios:", "opciones": ["Hormonales", "De ropa", "De idioma", "Ninguno"], "correcta": 0}, {"pregunta": "En la adolescencia es común sentir:", "opciones": ["Solo alegría", "Emociones intensas y cambiantes", "Solo tristeza", "Nada"], "correcta": 1}, {"pregunta": "Una forma saludable de manejar emociones es:", "opciones": ["Reprimirlas siempre", "Expresarlas y pedir apoyo cuando sea necesario", "Gritar a los demás", "Ignorarlas siempre"], "correcta": 1}, {"pregunta": "En la adolescencia se busca:", "opciones": ["Nunca tener amigos", "Construir una identidad propia", "Volver a ser bebé", "Dejar de pensar"], "correcta": 1}, {"pregunta": "La comunicación con la familia durante la adolescencia debe ser:", "opciones": ["Inexistente", "Abierta y respetuosa", "Con gritos", "Con mentiras"], "correcta": 1}, {"pregunta": "Cuidar la salud en la adolescencia implica:", "opciones": ["Dormir poco", "Buena alimentación, actividad física y descanso", "No bañarse", "Probar cualquier sustancia"], "correcta": 1}, {"pregunta": "La presión de grupo puede llevar a:", "opciones": ["Decisiones siempre buenas", "Tomar decisiones que no deseas si no hay criterio propio", "Volverse invisible", "Crecer más alto"], "correcta": 1}]}, {"id": "fce_02", "nombre": "Identidad y autoestima", "descripcion": "Quién soy y cómo me valoro", "preguntas": [{"pregunta": "La identidad personal es:", "opciones": ["Una contraseña", "Lo que te hace ser tú (cualidades, historia, gustos)", "Solo tu CURP", "Tu número de teléfono"], "correcta": 1}, {"pregunta": "La autoestima es:", "opciones": ["Odiar a los demás", "La valoración que tienes de ti mismo", "Un logro físico", "Una calificación"], "correcta": 1}, {"pregunta": "Una persona con alta autoestima:", "opciones": ["Se siente mejor que todos", "Se respeta y respeta a otros", "Humilla a los demás", "No tiene defectos"], "correcta": 1}, {"pregunta": "Para fortalecer la autoestima ayuda:", "opciones": ["Compararse constantemente con otros", "Reconocer logros y aceptarte", "Ignorar tus emociones", "Criticarte siempre"], "correcta": 1}, {"pregunta": "Tu identidad se forma por:", "opciones": ["Solo cómo te ven los demás", "Tu historia, familia, cultura y decisiones", "Solo tu apellido", "El clima"], "correcta": 1}, {"pregunta": "Un proyecto de vida es:", "opciones": ["Una tarea escolar menor", "Un plan personal con metas y caminos para lograrlas", "Un regalo material", "Solo un sueño sin acción"], "correcta": 1}, {"pregunta": "Reconocer tus cualidades y áreas de mejora te ayuda a:", "opciones": ["Crecer como persona", "Volverte invisible", "Engañar a otros", "Olvidarte de metas"], "correcta": 0}, {"pregunta": "La autonomía personal es:", "opciones": ["Depender totalmente de otros", "Capacidad de decidir por uno mismo con responsabilidad", "No tener opinión", "Solo seguir a otros"], "correcta": 1}, {"pregunta": "Una opinión respetuosa ante un desacuerdo es:", "opciones": ["Insultar", "Expresar tu punto sin agredir", "Ignorar a todos", "Imponer a la fuerza"], "correcta": 1}, {"pregunta": "Un hábito que daña la autoestima es:", "opciones": ["El autocuidado", "La autocrítica destructiva y comparaciones constantes", "Pedir consejo", "Agradecer"], "correcta": 1}]}, {"id": "fce_03", "nombre": "Valores", "descripcion": "Qué guía nuestras acciones", "preguntas": [{"pregunta": "Los valores son:", "opciones": ["Solo dinero", "Principios que guían la conducta hacia el bien", "Solo precios", "Solo gustos"], "correcta": 1}, {"pregunta": "La honestidad consiste en:", "opciones": ["Mentir a conveniencia", "Actuar con verdad y rectitud", "Esconder errores", "Copiar en exámenes"], "correcta": 1}, {"pregunta": "El respeto implica:", "opciones": ["Ignorar a los demás", "Reconocer la dignidad de cada persona", "Burlarse", "Imponer tu opinión"], "correcta": 1}, {"pregunta": "La responsabilidad es:", "opciones": ["Cumplir con lo que te corresponde y asumir consecuencias", "Culpar a los demás", "Abandonar tareas", "Prometer sin cumplir"], "correcta": 0}, {"pregunta": "La solidaridad es:", "opciones": ["Ayudar y apoyar a quienes lo necesitan", "Competir siempre", "Aislarse", "Ignorar problemas ajenos"], "correcta": 0}, {"pregunta": "La tolerancia significa:", "opciones": ["Estar de acuerdo en todo", "Respetar a quienes piensan o viven distinto", "Obedecer sin pensar", "Discriminar suavemente"], "correcta": 1}, {"pregunta": "La justicia busca:", "opciones": ["Favorecer a pocos", "Dar a cada quien lo que le corresponde", "Premiar solo a los ricos", "Ignorar leyes"], "correcta": 1}, {"pregunta": "La libertad responsable implica:", "opciones": ["Hacer cualquier cosa sin consecuencias", "Decidir respetando a otros y asumiendo consecuencias", "Imponerse siempre", "Actuar sin pensar"], "correcta": 1}, {"pregunta": "La empatía es:", "opciones": ["Burlarse", "Ponerse en los zapatos del otro y comprender sus sentimientos", "Competir", "Criticar"], "correcta": 1}, {"pregunta": "Los antivalores son:", "opciones": ["Comportamientos contrarios al bien común", "Valores antiguos", "Valores buenos", "Valores futuros"], "correcta": 0}]}, {"id": "fce_04", "nombre": "Derechos humanos", "descripcion": "Derechos que todos tenemos", "preguntas": [{"pregunta": "Los derechos humanos son:", "opciones": ["Privilegios para pocos", "Derechos inherentes a todas las personas", "Favores del gobierno", "Obligaciones laborales"], "correcta": 1}, {"pregunta": "Los derechos humanos son:", "opciones": ["Solo para adultos", "Universales: para todas las personas", "Solo para adolescentes", "Opcionales"], "correcta": 1}, {"pregunta": "El derecho a la educación significa que:", "opciones": ["Solo algunos estudian", "Toda persona debe poder acceder a la educación", "Es un privilegio costoso siempre", "Solo los mayores estudian"], "correcta": 1}, {"pregunta": "El derecho a la vida implica que:", "opciones": ["Se puede quitar a cualquiera", "Debe protegerse la vida de todas las personas", "Solo aplica a niños", "No es importante"], "correcta": 1}, {"pregunta": "La Declaración Universal de los Derechos Humanos se proclamó en:", "opciones": ["1948", "1776", "1810", "2000"], "correcta": 0}, {"pregunta": "La CNDH en México se encarga de:", "opciones": ["Organizar elecciones", "Defender derechos humanos", "Cobrar impuestos", "Construir carreteras"], "correcta": 1}, {"pregunta": "Un derecho de los adolescentes es:", "opciones": ["Trabajar jornadas completas obligatoriamente", "Recibir educación, salud, protección y ser escuchados", "Votar a los 12 años", "Conducir a los 13"], "correcta": 1}, {"pregunta": "La discriminación atenta contra:", "opciones": ["La igualdad y dignidad humana", "La matemática", "La economía", "Solo a los mayores"], "correcta": 0}, {"pregunta": "Los derechos humanos son:", "opciones": ["Solo derechos, sin deberes", "Complementarios a las responsabilidades sociales", "Algo viejo", "Opcionales"], "correcta": 1}, {"pregunta": "La libertad de expresión permite:", "opciones": ["Insultar libremente sin límites", "Expresar ideas con respeto y responsabilidad", "Mentir sin consecuencias", "Gritar en cualquier parte"], "correcta": 1}]}, {"id": "fce_05", "nombre": "Democracia", "descripcion": "Participación y gobierno", "preguntas": [{"pregunta": "La democracia es:", "opciones": ["Un gobierno donde el pueblo decide (directa o por representantes)", "Una dictadura", "Una monarquía absoluta", "Una empresa"], "correcta": 0}, {"pregunta": "En una democracia, los gobernantes se eligen por:", "opciones": ["Herencia", "Voto de los ciudadanos", "Sorteo entre pocos", "Nombramiento militar"], "correcta": 1}, {"pregunta": "En México se vota desde los:", "opciones": ["15 años", "18 años", "21 años", "25 años"], "correcta": 1}, {"pregunta": "Los tres poderes del Estado mexicano son:", "opciones": ["Ejecutivo, Legislativo y Judicial", "Norte, sur y centro", "Educativo, militar y civil", "Azul, rojo y verde"], "correcta": 0}, {"pregunta": "El Poder Ejecutivo en México lo encabeza:", "opciones": ["El Congreso", "El Presidente de la República", "La Suprema Corte", "El INE"], "correcta": 1}, {"pregunta": "El Poder Legislativo se encarga de:", "opciones": ["Juzgar", "Hacer las leyes", "Gobernar día a día", "Hacer ejércitos"], "correcta": 1}, {"pregunta": "El Poder Judicial se encarga de:", "opciones": ["Hacer leyes", "Aplicar la justicia e interpretar las leyes", "Gobernar", "Votar"], "correcta": 1}, {"pregunta": "El INE se encarga de:", "opciones": ["Impuestos", "Organizar elecciones en México", "La policía", "El tránsito"], "correcta": 1}, {"pregunta": "La democracia requiere:", "opciones": ["Pasividad total", "Participación ciudadana informada", "Solo obediencia", "No votar"], "correcta": 1}, {"pregunta": "La Constitución Mexicana es:", "opciones": ["Un libro cualquiera", "La ley suprema del país", "Un decreto anual", "Opcional"], "correcta": 1}]}, {"id": "fce_06", "nombre": "Diversidad cultural e inclusión", "descripcion": "Pluriculturalidad, pueblos originarios y discriminación", "preguntas": [{"pregunta": "La multiculturalidad consiste en:", "opciones": ["La existencia de varias culturas en un mismo territorio", "Una sola cultura dominante", "La desaparición de culturas minoritarias", "La homogeneidad absoluta"], "correcta": 0}, {"pregunta": "La interculturalidad va más allá porque implica:", "opciones": ["Separar las culturas", "Diálogo, intercambio y relación de respeto entre culturas distintas", "Imponer una cultura", "Ignorar las diferencias"], "correcta": 1}, {"pregunta": "El racismo es:", "opciones": ["Una opinión legítima", "Discriminación y trato desigual basado en origen étnico o rasgos físicos", "Una costumbre inofensiva", "Algo obligatorio"], "correcta": 1}, {"pregunta": "La xenofobia consiste en:", "opciones": ["Amor por lo extranjero", "Rechazo, miedo o desprecio hacia personas extranjeras o diferentes", "Curiosidad cultural", "Un idioma"], "correcta": 1}, {"pregunta": "¿Cuál NO es una lengua indígena de México?", "opciones": ["Náhuatl", "Maya", "Mixteco", "Catalán"], "correcta": 3}, {"pregunta": "Los pueblos originarios de México se caracterizan por:", "opciones": ["Ser una cultura homogénea", "Tener lenguas, cosmovisiones, tradiciones y conocimientos diversos propios", "No existir ya", "Ser recientes"], "correcta": 1}, {"pregunta": "El patrimonio cultural intangible incluye:", "opciones": ["Monumentos de piedra", "Lenguas, tradiciones orales, danzas, música y saberes", "Solo edificios coloniales", "Minerales"], "correcta": 1}, {"pregunta": "La UNESCO es el organismo de la ONU encargado de:", "opciones": ["La salud mundial", "Educación, ciencia y cultura (incluye patrimonio de la humanidad)", "La alimentación", "El comercio"], "correcta": 1}, {"pregunta": "Un estereotipo cultural dañino es:", "opciones": ["Una generalización injusta sobre un grupo (que todos son iguales de cierta manera)", "Un dato comprobado", "Una ley del país", "Un derecho humano"], "correcta": 0}, {"pregunta": "La inclusión social busca:", "opciones": ["Separar por grupos", "Garantizar que todas las personas participen con igualdad de oportunidades, sin discriminación", "Eliminar las diferencias culturales", "Imponer una cultura dominante"], "correcta": 1}]}, {"id": "fce_07", "nombre": "Igualdad de género", "descripcion": "Estereotipos, brecha y derechos", "preguntas": [{"pregunta": "La igualdad de género significa:", "opciones": ["Que todos deben comportarse idénticamente", "Igualdad de derechos, oportunidades y trato entre hombres y mujeres", "Que las mujeres dominen", "Que solo los hombres trabajen"], "correcta": 1}, {"pregunta": "La equidad de género:", "opciones": ["Es lo mismo que dar lo mismo a todos sin contexto", "Busca dar a cada persona lo necesario para alcanzar igualdad real, considerando desventajas históricas", "Ignora las diferencias", "Beneficia solo a un género"], "correcta": 1}, {"pregunta": "La brecha salarial de género se refiere a:", "opciones": ["Una oferta de empleo", "La diferencia promedio de sueldo entre hombres y mujeres por trabajo equivalente", "Una ley mexicana", "Un programa escolar"], "correcta": 1}, {"pregunta": "Decir \"las niñas no pueden ser ingenieras\" es un ejemplo de:", "opciones": ["Hecho biológico", "Estereotipo de género dañino", "Ley vigente", "Consejo profesional"], "correcta": 1}, {"pregunta": "Las \"masculinidades tóxicas\" se refieren a:", "opciones": ["Cualquier hombre", "Patrones culturales que presionan a los hombres a reprimir emociones o ser violentos para \"ser hombre\"", "Deportes masculinos", "Moda masculina"], "correcta": 1}, {"pregunta": "La sororidad es:", "opciones": ["Solidaridad, apoyo y hermandad entre mujeres", "Una ley", "Un partido político", "Una religión"], "correcta": 0}, {"pregunta": "En México, las mujeres obtuvieron el derecho al voto federal en:", "opciones": ["1853", "1953", "2020", "Aún no lo tienen"], "correcta": 1}, {"pregunta": "Las tareas domésticas y de cuidado, según la igualdad de género, deben ser:", "opciones": ["Exclusivas de las mujeres", "Compartidas equitativamente en el hogar", "Solo de los niños", "Obligatorias por ley para uno solo"], "correcta": 1}, {"pregunta": "La violencia de género afecta:", "opciones": ["Solo a mujeres adultas", "Principalmente a mujeres y niñas, pero también a personas por su orientación o identidad de género", "A nadie", "Solo a hombres"], "correcta": 1}, {"pregunta": "Un estudio o profesión puede ser elegida por:", "opciones": ["Solo hombres", "Solo mujeres", "Cualquier persona sin importar su género", "Solo adultos mayores"], "correcta": 2}]}, {"id": "fce_08", "nombre": "Convivencia y prevención de violencia", "descripcion": "Tipos de violencia, ciberacoso y mediación", "preguntas": [{"pregunta": "La violencia psicológica se manifiesta como:", "opciones": ["Solo golpes", "Humillaciones, amenazas, burlas y manipulación emocional", "Una discusión normal", "Solo gritos en una sola ocasión"], "correcta": 1}, {"pregunta": "La violencia económica consiste en:", "opciones": ["Controlar los recursos económicos de otra persona para someterla", "Pagar renta", "Ahorrar dinero", "Ir al banco"], "correcta": 0}, {"pregunta": "El ciberacoso (ciberbullying) es:", "opciones": ["Acoso realizado mediante redes sociales, mensajería o internet", "Un videojuego", "Un curso de computación", "Una conversación casual"], "correcta": 0}, {"pregunta": "El sexting implica:", "opciones": ["Un deporte acuático", "El envío de contenido íntimo por medios digitales, con riesgos serios de difusión no consentida", "Una clase de computación", "Un trámite escolar"], "correcta": 1}, {"pregunta": "La violencia digital puede dejar:", "opciones": ["Ningún rastro", "Registros permanentes en internet y consecuencias legales y emocionales duraderas", "Solo efectos temporales inofensivos", "Felicidad siempre"], "correcta": 1}, {"pregunta": "Ante el ciberacoso, lo recomendable es:", "opciones": ["Responder con más agresión", "Guardar evidencias, no confrontar, bloquear, denunciar y buscar apoyo adulto", "Borrar todo y callar siempre", "Compartir el contenido a más personas"], "correcta": 1}, {"pregunta": "Un protocolo escolar de protección busca:", "opciones": ["Castigar al azar", "Establecer pasos claros para prevenir, detectar y atender casos de violencia o acoso", "Ignorar problemas", "Premiar a los agresores"], "correcta": 1}, {"pregunta": "La mediación en conflictos consiste en:", "opciones": ["Un juez que sentencia", "Una persona neutral que facilita el diálogo para que las partes encuentren una solución", "Una pelea organizada", "Silencio forzado"], "correcta": 1}, {"pregunta": "La violencia simbólica se manifiesta en:", "opciones": ["Golpes directos", "Mensajes, imágenes o discursos que naturalizan la desigualdad o dominación", "Ningún caso real", "Solo en libros"], "correcta": 1}, {"pregunta": "La cultura de paz implica:", "opciones": ["Imponer el silencio", "Construir relaciones basadas en respeto, diálogo, justicia y resolución no violenta de conflictos", "Usar la fuerza", "Ignorar las diferencias"], "correcta": 1}]}, {"id": "fce_09", "nombre": "Responsabilidad y compromiso global", "descripcion": "Transparencia, participación y sustentabilidad", "preguntas": [{"pregunta": "La transparencia gubernamental significa:", "opciones": ["Ocultar información pública", "Hacer accesible la información sobre el uso de recursos y decisiones públicas a la ciudadanía", "Un tipo de cristal", "Una moda política"], "correcta": 1}, {"pregunta": "La rendición de cuentas es:", "opciones": ["Un examen escolar", "La obligación de los servidores públicos de informar y justificar sus decisiones ante la ciudadanía", "Un cobro", "Una opinión"], "correcta": 1}, {"pregunta": "Una ONG es:", "opciones": ["Un partido político", "Una organización no gubernamental sin fines de lucro que atiende causas sociales o ambientales", "Una empresa estatal", "Un impuesto"], "correcta": 1}, {"pregunta": "El activismo ciudadano consiste en:", "opciones": ["Participar activamente para promover cambios sociales o ambientales legítimos", "Quejarse en silencio", "No involucrarse nunca", "Solo votar"], "correcta": 0}, {"pregunta": "Los Objetivos de Desarrollo Sostenible (ODS) son:", "opciones": ["17 metas globales de la ONU para 2030 (pobreza, educación, clima, igualdad, etc.)", "Leyes mexicanas", "Un proyecto escolar local", "Ningún acuerdo"], "correcta": 0}, {"pregunta": "Un ejemplo concreto de ODS es:", "opciones": ["Educación de calidad", "Construir más centros comerciales", "Eliminar árboles", "Aumentar emisiones"], "correcta": 0}, {"pregunta": "La fiscalidad (impuestos) sirve principalmente para:", "opciones": ["Castigar a las personas", "Financiar bienes y servicios públicos (educación, salud, infraestructura)", "Enriquecer a unos pocos exclusivamente", "Nada útil"], "correcta": 1}, {"pregunta": "La participación juvenil en asuntos públicos:", "opciones": ["Es irrelevante", "Es un derecho y aporta perspectivas importantes para la sociedad", "Solo debería darse a los 30 años", "Está prohibida"], "correcta": 1}, {"pregunta": "Denunciar un acto de corrupción o abuso es:", "opciones": ["Un derecho y un deber ciudadano, protegido por ley", "Una traición", "Una falta", "Un chisme"], "correcta": 0}, {"pregunta": "La democracia no solo es votar, también implica:", "opciones": ["Informarse, participar, dialogar y exigir rendición de cuentas", "Guardar silencio", "Aceptar todo sin cuestionar", "Evitar la política"], "correcta": 0}]}]}]};
+
+const FRASES_NIVEL = {
+  1: "¡Bienvenido a tu primer nivel! Este es el comienzo de una aventura épica.",
+  2: "¡Nivel 2 desbloqueado! Ya estás en camino. Sigue adelante.",
+  3: "¡Nivel 3! Eres un aprendiz en ascenso. Cada pregunta te fortalece.",
+  4: "¡Nivel 4 alcanzado! Tu dedicación está siendo recompensada.",
+  5: "¡Nivel 5 desbloqueado! Estás en el punto medio de tu viaje. ¡Impresionante!",
+  6: "¡Nivel 6! Ya dominas mucho. Sigue creciendo, campeón.",
+  7: "¡Nivel 7 desbloqueado! Estás en la liga de los estudiosos.",
+  8: "¡Nivel 8! Casi llegamos a la cima. No te detengas ahora.",
+  9: "¡Nivel 9 alcanzado! Estás a un paso de la maestría.",
+  10: "¡NIVEL 10! ¡Eres un verdadero héroe! Celebra este logro.",
+};
+
+const XP_POR_CORRECTA = 10;
+const XP_BONUS_PERFECTO = 50;
+const XP_POR_NIVEL = 200;
+const UMBRAL_DESBLOQUEO = 7;
+const STORAGE_KEY = 'ninosHeroesApp_v3';
+
+let state = null;
+
+function estadoInicial() {
+  return {
+    usuario: { nombre: '', totalXP: 0 },
+    progreso: {},
+    logros: [],
+    vista: 'welcome',
+    materiaActual: null,
+    temaActual: null,
+    quiz: null,
+    resultadosTemp: null,
+  };
+}
+
+// ============================================================
+// PERSISTENCIA - GARANTIZADA
+// ============================================================
+function cargar() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (parsed.usuario && parsed.usuario.nombre && parsed.usuario.nombre.trim()) {
+      console.log('✓ Datos cargados:', parsed.usuario.nombre);
+      return parsed;
+    }
+    return null;
+  } catch (e) {
+    console.error('Error al cargar:', e);
+    return null;
+  }
+}
+
+function guardar() {
+  try {
+    if (!state.usuario.nombre || !state.usuario.nombre.trim()) {
+      console.warn('No se puede guardar: nombre vacío');
+      return false;
+    }
+    const datosPersistir = {
+      usuario: { nombre: state.usuario.nombre.trim(), totalXP: state.usuario.totalXP },
+      progreso: state.progreso,
+      logros: state.logros,
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(datosPersistir));
+    console.log('✓ Guardado:', state.usuario.nombre, '|', state.usuario.totalXP, 'XP');
+    return true;
+  } catch (e) {
+    console.error('❌ Error al guardar:', e);
+    return false;
+  }
+}
+
+// ============================================================
+// LÓGICA DE JUEGO
+// ============================================================
+function calcularNivel(xp) {
+  return Math.floor(xp / XP_POR_NIVEL) + 1;
+}
+
+function xpDelNivel(xp) {
+  return xp % XP_POR_NIVEL;
+}
+
+function getProgresoTema(materiaId, temaId) {
+  if (!state.progreso[materiaId]) state.progreso[materiaId] = {};
+  if (!state.progreso[materiaId][temaId]) {
+    state.progreso[materiaId][temaId] = { intentos: 0, mejorPuntaje: 0, completado: false };
+  }
+  return state.progreso[materiaId][temaId];
+}
+
+function temaDesbloqueado(materia, idxTema) {
+  if (idxTema === 0) return true;
+  const temaAnterior = materia.temas[idxTema - 1];
+  const prog = getProgresoTema(materia.id, temaAnterior.id);
+  return prog.mejorPuntaje >= UMBRAL_DESBLOQUEO;
+}
+
+function totalTemasCompletados() {
+  let n = 0;
+  DATA.materias.forEach(m => {
+    m.temas.forEach(t => {
+      const prog = getProgresoTema(m.id, t.id);
+      if (prog.completado) n++;
+    });
+  });
+  return n;
+}
+
+function temasCompletadosPorMateria(materia) {
+  let n = 0;
+  materia.temas.forEach(t => {
+    const prog = getProgresoTema(materia.id, t.id);
+    if (prog.completado) n++;
+  });
+  return n;
+}
+
+// ============================================================
+// LOGROS
+// ============================================================
+const LOGROS = [
+  { id: 'primer_paso', emoji: '🎯', nombre: 'Primer paso', desc: 'Completa tu primer tema' },
+  { id: 'perfecto_1', emoji: '⭐', nombre: 'Perfecto', desc: 'Obtén 10/10 en un tema' },
+  { id: 'perfecto_5', emoji: '🌟', nombre: 'Estrella dorada', desc: 'Obtén 10/10 en 5 temas' },
+  { id: 'materia_1', emoji: '📚', nombre: 'Explorador', desc: 'Completa todos los temas de una materia' },
+  { id: 'materia_3', emoji: '📖', nombre: 'Estudioso', desc: 'Completa 3 materias enteras' },
+  { id: 'materia_todas', emoji: '🎓', nombre: 'Graduado', desc: 'Completa las 7 materias' },
+  { id: 'nivel_5', emoji: '🎖️', nombre: 'Nivel 5', desc: 'Alcanza el nivel 5' },
+  { id: 'nivel_10', emoji: '🏆', nombre: 'Nivel 10', desc: 'Alcanza el nivel 10' },
+  { id: 'nivel_20', emoji: '👑', nombre: 'Leyenda', desc: 'Alcanza el nivel 20' },
+  { id: 'temas_10', emoji: '🔥', nombre: 'En racha', desc: 'Completa 10 temas' },
+  { id: 'temas_30', emoji: '💪', nombre: 'Imparable', desc: 'Completa 30 temas' },
+  { id: 'todos_temas', emoji: '🌈', nombre: 'Maestro total', desc: 'Completa los 63 temas' },
+];
+
+function evaluarLogros() {
+  const nuevos = [];
+  function agregar(id) {
+    if (!state.logros.includes(id)) {
+      state.logros.push(id);
+      const logro = LOGROS.find(l => l.id === id);
+      if (logro) nuevos.push(logro);
+    }
+  }
+  if (totalTemasCompletados() >= 1) agregar('primer_paso');
+  let perfectos = 0;
+  DATA.materias.forEach(m => m.temas.forEach(t => {
+    const p = getProgresoTema(m.id, t.id);
+    if (p.mejorPuntaje === 10) perfectos++;
+  }));
+  if (perfectos >= 1) agregar('perfecto_1');
+  if (perfectos >= 5) agregar('perfecto_5');
+  let materiasCompletas = 0;
+  DATA.materias.forEach(m => {
+    if (temasCompletadosPorMateria(m) === m.temas.length) materiasCompletas++;
+  });
+  if (materiasCompletas >= 1) agregar('materia_1');
+  if (materiasCompletas >= 3) agregar('materia_3');
+  if (materiasCompletas >= DATA.materias.length) agregar('materia_todas');
+  const nivel = calcularNivel(state.usuario.totalXP);
+  if (nivel >= 5) agregar('nivel_5');
+  if (nivel >= 10) agregar('nivel_10');
+  if (nivel >= 20) agregar('nivel_20');
+  const totalTemas = totalTemasCompletados();
+  if (totalTemas >= 10) agregar('temas_10');
+  if (totalTemas >= 30) agregar('temas_30');
+  if (totalTemas >= 63) agregar('todos_temas');
+  return nuevos;
+}
+
+function lanzarConfeti() {
+  const box = document.createElement('div');
+  box.className = 'confetti';
+  const colores = ['#F59E0B', '#22C55E', '#6366F1', '#EC4899', '#EF4444', '#06B6D4'];
+  for (let i = 0; i < 60; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.background = colores[i % colores.length];
+    p.style.animationDelay = (Math.random() * 0.3) + 's';
+    p.style.animationDuration = (1.5 + Math.random() * 1.2) + 's';
+    box.appendChild(p);
+  }
+  document.body.appendChild(box);
+  setTimeout(() => box.remove(), 3000);
+}
+
+// ============================================================
+// UTILIDADES
+// ============================================================
+function el(tag, attrs = {}, children = []) {
+  const n = document.createElement(tag);
+  for (const k in attrs) {
+    if (attrs[k] == null) continue;
+    if (k === 'className') n.className = attrs[k];
+    else if (k === 'innerHTML') n.innerHTML = attrs[k];
+    else if (k.startsWith('on')) n.addEventListener(k.slice(2).toLowerCase(), attrs[k]);
+    else if (k === 'style' && typeof attrs[k] === 'object') Object.assign(n.style, attrs[k]);
+    else if (typeof attrs[k] === 'boolean') {
+      if (attrs[k]) n.setAttribute(k, '');
+    }
+    else n.setAttribute(k, attrs[k]);
+  }
+  (Array.isArray(children) ? children : [children]).forEach(c => {
+    if (c == null || c === false) return;
+    if (typeof c === 'string' || typeof c === 'number') n.appendChild(document.createTextNode(c));
+    else n.appendChild(c);
+  });
+  return n;
+}
+
+const app = document.getElementById('app');
+
+function render() {
+  app.innerHTML = '';
+  if (state.vista === 'welcome') {
+    app.appendChild(renderWelcome());
+  } else if (state.vista === 'dashboard') {
+    app.appendChild(renderDashboard());
+  } else if (state.vista === 'subject') {
+    app.appendChild(renderSubject());
+  } else if (state.vista === 'quiz') {
+    app.appendChild(renderQuiz());
+  } else if (state.vista === 'results') {
+    app.appendChild(renderResults());
+  }
+  window.scrollTo(0, 0);
+}
+
+// ---------- Welcome ----------
+function renderWelcome() {
+  const input = el('input', { type: 'text', placeholder: 'Escribe tu nombre', maxlength: 25, autocomplete: 'off' });
+  const btn = el('button', { onClick: () => {
+    const nombre = input.value.trim();
+    if (!nombre) { 
+      alert('⚠ Por favor escribe tu nombre para continuar');
+      input.focus(); 
+      return; 
+    }
+    state.usuario.nombre = nombre;
+    if (!guardar()) {
+      alert('⚠ Error al guardar. Intenta de nuevo.');
+      return;
+    }
+    state.vista = 'dashboard';
+    render();
+  }}, ['¡Empezar a aprender!']);
+  input.addEventListener('keypress', (e) => { if (e.key === 'Enter') btn.click(); });
+  setTimeout(() => input.focus(), 100);
+  return el('div', { className: 'welcome' }, [
+    el('div', { className: 'welcome-hero' }, ['🧑‍🎓']),
+    el('h1', {}, ['Niños Héroes APP']),
+    el('p', { className: 'tagline' }, ['Aprende jugando todas las materias de 1° de secundaria. ¡Vamos, tú puedes!']),
+    el('div', { className: 'welcome-form' }, [input, btn])
+  ]);
+}
+
+// ---------- Dashboard ----------
+function renderDashboard() {
+  const xp = state.usuario.totalXP;
+  const nivel = calcularNivel(xp);
+  const xpEnNivel = xpDelNivel(xp);
+  const porcentajeNivel = (xpEnNivel / XP_POR_NIVEL) * 100;
+  const iniciales = state.usuario.nombre.trim().slice(0, 2).toUpperCase();
+
+  const greeting = el('div', { className: 'greeting' }, [
+    el('div', { className: 'avatar' }, [iniciales]),
+    el('div', { className: 'greeting-text', style: { flex: 1 } }, [
+      el('h2', {}, ['¡Hola, ' + state.usuario.nombre + '!']),
+      el('p', {}, ['Nivel ' + nivel + ' · ' + xp + ' XP total']),
+      el('div', { className: 'xp-bar' }, [
+        el('div', { className: 'xp-bar-fill', style: { width: porcentajeNivel + '%' } })
+      ]),
+      el('div', { className: 'greeting-meta' }, [
+        el('span', {}, [xpEnNivel + ' / ' + XP_POR_NIVEL + ' XP']),
+        el('span', {}, ['Nivel ' + (nivel + 1)])
+      ])
+    ])
+  ]);
+
+  const logrosCard = el('div', { className: 'achievements-card', onClick: () => mostrarLogrosModal() }, [
+    el('div', { className: 'achievements-icon' }, ['🏅']),
+    el('div', { className: 'achievements-text', style: { flex: 1 } }, [
+      el('h3', {}, ['Mis logros']),
+      el('p', {}, [state.logros.length + ' de ' + LOGROS.length + ' desbloqueados'])
+    ]),
+    el('div', { style: { fontSize: '22px' } }, ['›'])
+  ]);
+
+  const grid = el('div', { className: 'subjects-grid' });
+  DATA.materias.forEach(m => {
+    const completados = temasCompletadosPorMateria(m);
+    const porcentaje = (completados / m.temas.length) * 100;
+    const card = el('div', { className: 'subject-card', onClick: () => {
+      state.materiaActual = m.id;
+      state.vista = 'subject';
+      render();
+    }}, [
+      el('div', { className: 'subject-icon', style: { background: m.color } }, [m.icono]),
+      el('h3', {}, [m.nombre]),
+      el('p', {}, [m.descripcion]),
+      el('div', { className: 'subject-progress' }, [
+        el('div', { className: 'subject-progress-bar' }, [
+          el('div', { className: 'subject-progress-fill', style: { width: porcentaje + '%', background: m.color } })
+        ]),
+        el('span', {}, [completados + '/' + m.temas.length])
+      ])
+    ]);
+    grid.appendChild(card);
+  });
+
+  return el('div', {}, [
+    el('div', { className: 'topbar' }, [
+      el('div', { className: 'left' }, [
+        el('div', {}, [
+          el('div', { className: 'topbar-title' }, ['Niños Héroes APP']),
+          el('div', { className: 'topbar-subtitle' }, ['1° de Secundaria'])
+        ])
+      ]),
+      el('div', { style: { display: 'flex', gap: '8px' } }, [
+        el('div', { className: 'stats-pill lvl' }, ['⚡ ' + nivel]),
+        el('div', { className: 'stats-pill' }, ['🌟 ' + xp])
+      ])
+    ]),
+    el('div', { className: 'container' }, [
+      greeting,
+      logrosCard,
+      el('div', { className: 'section-title' }, ['Materias']),
+      grid,
+      el('div', { className: 'footer' }, ['Niños Héroes APP — Aprende y avanza a tu ritmo'])
+    ])
+  ]);
+}
+
+// ---------- Subject view ----------
+function renderSubject() {
+  const materia = DATA.materias.find(m => m.id === state.materiaActual);
+  const temas = el('div', { className: 'topics-list' });
+
+  materia.temas.forEach((t, idx) => {
+    const desbloqueado = temaDesbloqueado(materia, idx);
+    const prog = getProgresoTema(materia.id, t.id);
+    const estado = prog.completado ? 'completed' : (prog.intentos > 0 ? 'in-progress' : '');
+    const className = 'topic-card ' + estado + (desbloqueado ? '' : ' locked');
+    const card = el('div', { className: className.trim(), onClick: () => {
+      if (!desbloqueado) return;
+      iniciarQuiz(materia, t, idx);
+    }}, [
+      el('div', { className: 'topic-number' }, [
+        desbloqueado ? (prog.completado ? '✓' : String(idx + 1)) : '🔒'
+      ]),
+      el('div', { className: 'topic-info' }, [
+        el('h3', {}, [t.nombre]),
+        el('p', {}, [desbloqueado ? t.descripcion : 'Completa el tema anterior con al menos ' + UMBRAL_DESBLOQUEO + '/10'])
+      ]),
+      prog.intentos > 0 ?
+        el('div', { className: 'topic-score' }, [prog.mejorPuntaje + '/10']) :
+        el('div', { className: 'topic-score none' }, [desbloqueado ? 'Empezar' : '']),
+      desbloqueado ? el('div', { className: 'topic-arrow' }, ['›']) : null
+    ]);
+    temas.appendChild(card);
+  });
+
+  const completados = temasCompletadosPorMateria(materia);
+
+  return el('div', {}, [
+    el('div', { className: 'topbar' }, [
+      el('div', { className: 'left' }, [
+        el('button', { className: 'btn-back', onClick: () => { state.vista = 'dashboard'; render(); }}, ['←']),
+        el('div', {}, [
+          el('div', { className: 'topbar-title' }, [materia.nombre]),
+          el('div', { className: 'topbar-subtitle' }, [completados + ' / ' + materia.temas.length + ' temas'])
+        ])
+      ])
+    ]),
+    el('div', { className: 'container' }, [
+      el('div', { className: 'subject-header', style: { background: 'linear-gradient(135deg, ' + materia.color + ', ' + materia.color + 'CC)' } }, [
+        el('div', { className: 'badge' }, ['1° Secundaria']),
+        el('h1', {}, [materia.icono + ' ' + materia.nombre]),
+        el('p', {}, [materia.descripcion])
+      ]),
+      el('div', { className: 'section-title' }, ['Temas']),
+      temas
+    ])
+  ]);
+}
+
+// ---------- Quiz ----------
+function iniciarQuiz(materia, tema, temaIdx) {
+  state.quiz = {
+    materiaId: materia.id,
+    temaId: tema.id,
+    temaIdx: temaIdx,
+    preguntas: tema.preguntas.map(p => ({ ...p })),
+    indice: 0,
+    puntaje: 0,
+    respuestas: [],
+    seleccionada: null,
+    respondida: false,
+  };
+  state.materiaActual = materia.id;
+  state.temaActual = tema.id;
+  state.vista = 'quiz';
+  render();
+}
+
+function renderQuiz() {
+  const q = state.quiz;
+  const materia = DATA.materias.find(m => m.id === q.materiaId);
+  const tema = materia.temas.find(t => t.id === q.temaId);
+  const pregunta = q.preguntas[q.indice];
+  const total = q.preguntas.length;
+  const porcentaje = (q.indice / total) * 100;
+
+  const options = pregunta.opciones.map((opt, idx) => {
+    const letras = ['A', 'B', 'C', 'D'];
+    let cls = 'option-btn';
+    if (q.respondida) {
+      if (idx === pregunta.correcta) cls += ' correct';
+      else if (idx === q.seleccionada) cls += ' wrong';
+    }
+    return el('button', {
+      className: cls,
+      disabled: q.respondida,
+      onClick: () => {
+        if (q.respondida) return;
+        q.seleccionada = idx;
+        q.respondida = true;
+        const esCorrecta = idx === pregunta.correcta;
+        if (esCorrecta) q.puntaje++;
+        q.respuestas.push({ idx: idx, correcta: esCorrecta });
+        render();
+      }
+    }, [
+      el('div', { className: 'option-letter' }, [letras[idx]]),
+      el('span', { style: { flex: 1 } }, [opt])
+    ]);
+  });
+
+  let feedback = null;
+  if (q.respondida) {
+    const esCorrecta = q.seleccionada === pregunta.correcta;
+    const letras = ['A', 'B', 'C', 'D'];
+    feedback = el('div', { className: 'quiz-feedback ' + (esCorrecta ? 'correct' : 'wrong') }, [
+      el('div', { className: 'quiz-feedback-text' }, [
+        esCorrecta ? '¡Correcto! 🎉' : 'Respuesta incorrecta',
+        esCorrecta ? null : el('small', {}, ['La correcta era: ' + letras[pregunta.correcta] + ') ' + pregunta.opciones[pregunta.correcta]])
+      ]),
+      el('button', { className: 'btn-continue' + (esCorrecta ? '' : ' error'), onClick: () => avanzarPregunta() }, [
+        q.indice < total - 1 ? 'Siguiente' : 'Ver resultados'
+      ])
+    ]);
+  }
+
+  return el('div', {}, [
+    el('div', { className: 'topbar' }, [
+      el('div', { className: 'left' }, [
+        el('button', { className: 'btn-back', onClick: () => {
+          if (confirm('¿Salir del quiz? Se perderá tu progreso actual.')) {
+            state.vista = 'subject'; state.quiz = null; render();
+          }
+        }}, ['×']),
+        el('div', {}, [
+          el('div', { className: 'topbar-title' }, [tema.nombre]),
+          el('div', { className: 'topbar-subtitle' }, [materia.icono + ' ' + materia.nombre])
+        ])
+      ]),
+      el('div', { className: 'stats-pill' }, ['✓ ' + q.puntaje])
+    ]),
+    el('div', { className: 'quiz-progress' }, [
+      el('div', { className: 'quiz-progress-info' }, [
+        el('span', {}, ['Pregunta ' + (q.indice + 1) + ' de ' + total]),
+        el('span', {}, [Math.round(porcentaje) + '%'])
+      ]),
+      el('div', { className: 'quiz-progress-bar' }, [
+        el('div', { className: 'quiz-progress-fill', style: { width: ((q.indice + (q.respondida ? 1 : 0)) / total * 100) + '%', background: materia.color } })
+      ])
+    ]),
+    el('div', { className: 'quiz-body' }, [
+      el('div', { className: 'quiz-question' }, [pregunta.pregunta]),
+      el('div', { className: 'quiz-options' }, options),
+      feedback
+    ])
+  ]);
+}
+
+function avanzarPregunta() {
+  const q = state.quiz;
+  if (q.indice < q.preguntas.length - 1) {
+    q.indice++;
+    q.seleccionada = null;
+    q.respondida = false;
+    render();
+  } else {
+    finalizarQuiz();
+  }
+}
+
+function finalizarQuiz() {
+  const q = state.quiz;
+  const prog = getProgresoTema(q.materiaId, q.temaId);
+  prog.intentos++;
+  const mejoro = q.puntaje > prog.mejorPuntaje;
+  if (mejoro) prog.mejorPuntaje = q.puntaje;
+  if (q.puntaje >= UMBRAL_DESBLOQUEO) prog.completado = true;
+
+  let xpGanado = q.puntaje * XP_POR_CORRECTA;
+  if (q.puntaje === 10) xpGanado += XP_BONUS_PERFECTO;
+  const esPrimero = prog.intentos === 1;
+  if (esPrimero || mejoro) {
+    state.usuario.totalXP += xpGanado;
+  } else {
+    xpGanado = Math.floor(xpGanado / 3);
+    state.usuario.totalXP += xpGanado;
+  }
+
+  const nivelAntes = calcularNivel(state.usuario.totalXP - xpGanado);
+  const nivelAhora = calcularNivel(state.usuario.totalXP);
+  const subioDNivel = nivelAhora > nivelAntes;
+
+  const nuevosLogros = evaluarLogros();
+
+  state.resultadosTemp = {
+    puntaje: q.puntaje,
+    total: q.preguntas.length,
+    xpGanado: xpGanado,
+    nuevosLogros: nuevosLogros,
+    perfecto: q.puntaje === 10,
+    aprobado: q.puntaje >= UMBRAL_DESBLOQUEO,
+    subioDNivel: subioDNivel,
+    nivelNuevo: nivelAhora,
+  };
+
+  state.vista = 'results';
+  state.quiz = null;
+  guardar();
+  if (q.puntaje >= UMBRAL_DESBLOQUEO) lanzarConfeti();
+  render();
+}
+
+// ---------- Results ----------
+function renderResults() {
+  const r = state.resultadosTemp;
+  const materia = DATA.materias.find(m => m.id === state.materiaActual);
+  const tema = materia.temas.find(t => t.id === state.temaActual);
+
+  let emoji = '🎉'; let titulo = '¡Buen trabajo!';
+  if (r.perfecto) { emoji = '🏆'; titulo = '¡Perfecto!'; }
+  else if (!r.aprobado) { emoji = '💪'; titulo = '¡Inténtalo otra vez!'; }
+  const subtitulo = r.aprobado ? 'Completaste el tema ' + tema.nombre : 'Necesitas ' + UMBRAL_DESBLOQUEO + '/10 para desbloquear el siguiente tema';
+
+  const elementos = [
+    el('div', { className: 'topbar' }, [
+      el('div', { className: 'left' }, [
+        el('button', { className: 'btn-back', onClick: () => { state.vista = 'subject'; render(); }}, ['←']),
+        el('div', {}, [
+          el('div', { className: 'topbar-title' }, ['Resultados']),
+          el('div', { className: 'topbar-subtitle' }, [tema.nombre])
+        ])
+      ])
+    ]),
+    el('div', { className: 'results' }, [
+      el('div', { className: 'results-emoji' }, [emoji]),
+      el('h1', {}, [titulo]),
+      el('p', { className: 'subtitle' }, [subtitulo]),
+    ])
+  ];
+
+  if (r.subioDNivel) {
+    elementos.push(
+      el('div', { className: 'level-up-banner' }, ['⭐ NIVEL ' + r.nivelNuevo + ' DESBLOQUEADO ⭐']),
+      el('div', { className: 'level-up-quote' }, ['"' + FRASES_NIVEL[r.nivelNuevo] + '"'])
+    );
+  }
+
+  elementos.push(
+    el('div', { className: 'results-score' }, [
+      el('div', {}, [
+        el('span', { className: 'results-score-big' }, [String(r.puntaje)]),
+        el('span', { className: 'results-score-total' }, ['/' + r.total])
+      ]),
+      el('div', { className: 'results-score-label' }, ['Respuestas correctas'])
+    ]),
+    el('div', { className: 'results-rewards' }, [
+      '⚡ +' + r.xpGanado + ' XP' + (r.perfecto ? ' (¡bonus por 10/10!)' : '')
+    ])
+  );
+
+  if (r.nuevosLogros.length > 0) {
+    const logrosDiv = el('div', { className: 'new-achievements' }, [
+      el('h3', {}, ['Nuevos logros'])
+    ]);
+    r.nuevosLogros.forEach(l => {
+      logrosDiv.appendChild(el('div', { className: 'new-achievement-item' }, [
+        el('div', { className: 'new-achievement-emoji' }, [l.emoji]),
+        el('div', { className: 'new-achievement-info' }, [
+          el('h4', {}, [l.nombre]),
+          el('p', {}, [l.desc])
+        ])
+      ]));
+    });
+    elementos.push(logrosDiv);
+  }
+
+  elementos.push(
+    el('div', { className: 'results-buttons' }, [
+      r.aprobado ? el('button', { className: 'btn-primary', onClick: () => { state.vista = 'subject'; render(); }}, ['Continuar']) :
+                   el('button', { className: 'btn-primary', onClick: () => {
+                     const t = materia.temas.find(tt => tt.id === state.temaActual);
+                     const ti = materia.temas.indexOf(t);
+                     iniciarQuiz(materia, t, ti);
+                   }}, ['Reintentar tema']),
+      el('button', { className: 'btn-secondary', onClick: () => { state.vista = 'subject'; render(); }}, ['Volver a la materia'])
+    ])
+  );
+
+  return el('div', {}, elementos);
+}
+
+// ---------- Modal de logros ----------
+function mostrarLogrosModal() {
+  const backdrop = el('div', { className: 'modal-backdrop', onClick: (e) => { if (e.target === backdrop) cerrar(); }});
+  function cerrar() { backdrop.remove(); }
+  const modal = el('div', { className: 'modal' }, [
+    el('div', { className: 'modal-header' }, [
+      el('h2', {}, ['🏅 Mis logros']),
+      el('button', { className: 'btn-close', onClick: cerrar }, ['×'])
+    ]),
+  ]);
+  LOGROS.forEach(l => {
+    const desbloqueado = state.logros.includes(l.id);
+    modal.appendChild(el('div', { className: 'achievement-item' + (desbloqueado ? '' : ' locked') }, [
+      el('div', { className: 'achievement-emoji' }, [desbloqueado ? l.emoji : '🔒']),
+      el('div', { className: 'achievement-info' }, [
+        el('h3', {}, [l.nombre]),
+        el('p', {}, [l.desc])
+      ])
+    ]));
+  });
+  backdrop.appendChild(modal);
+  document.body.appendChild(backdrop);
+}
+
+// ============================================================
+// INICIO
+// ============================================================
+function iniciar() {
+  state = estadoInicial();
+  const guardado = cargar();
+  if (guardado && guardado.usuario && guardado.usuario.nombre) {
+    state.usuario = guardado.usuario;
+    state.progreso = guardado.progreso || {};
+    state.logros = guardado.logros || [];
+    state.vista = 'dashboard';
+  } else {
+    state.vista = 'welcome';
+  }
+  render();
+}
+
+iniciar();
+
+// DEBUG
+window.resetearProgreso = function() {
+  if (confirm('¿Borrar TODO tu progreso? Esto no se puede deshacer.')) {
+    localStorage.removeItem(STORAGE_KEY);
+    state = estadoInicial();
+    state.vista = 'welcome';
+    render();
+    console.log('✓ Progreso borrado');
+  }
+};
+
+window.verEstado = function() {
+  console.log('Usuario:', state.usuario.nombre, '| XP:', state.usuario.totalXP);
+  console.log('LocalStorage:', localStorage.getItem(STORAGE_KEY));
+};
+</script>
+</body>
+</html>
